@@ -198,7 +198,7 @@ i[class^=icon-] {
 	line-height: 0;
 }
 
-.icon-close:after { /* work gte IE8 */
+.icon-close:after { /* gte IE8 */
 	content: "×";
 	font-family: "\5B8B\4F53",sans-serif;
 	font-size: 18px;
@@ -231,10 +231,10 @@ i[class^=icon-caret] {
 }
 /* other */
 .img-box {
-
+	
 }
 .overlay {
-
+	
 }
 /* TABLET AND PHONE */
 @media screen and (max-device-width: 768px) {
