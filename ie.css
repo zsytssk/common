@@ -1,0 +1,66 @@
+/*------------------------------------------------
+  ie.css
+	Version： 1.0.2
+	Author： zsytssk
+	Description: this is a extra css file for Ugly IE
+	Latest updates: 04/18/2013 11:12
+------------------------------------------------*/
+
+/* CSS support */
+/*1* selector */
+*html .icon-close,
+*html .icon-caret-down,
+*html .icon-caret-left,
+*html .icon-caret-right,
+*html .icon-caret-up {
+	display: inline;
+	font-size: 0;
+	line-height: 0;
+	zoom: 1;
+}
+
+/*2* radius */
+
+/*2* rgba */
+
+/* Default style */
+
+/* ie8 m-a  */
+
+/* layout */
+/*1* float */
+.ie6 .fl,
+.ie6 .fr {
+	display: inline;
+}
+
+.?? {
+	*zoom: 1;
+}
+/*1* inline block */
+.d-ib {
+	*display: inline;
+	*zoom: 1;
+}
+
+/*2* 3px */
+
+/*1* min */
+
+/*1* pos-f */
+*html .pos-r {
+	height: 1%;
+}
+*html .pos-f {
+	position: absolute;
+}
+
+/*1* PNG */
+
+/*1* other */
+.clearfix{
+	*min-height: 1%;
+	_height: 1%;
+	_overflow: visible;
+}
+
