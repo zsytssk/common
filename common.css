@@ -1,11 +1,11 @@
 @charset "utf-8";
-
 /*------------------------------------------------
-	common.css 2013-01-08 16:52:25
-	version： 1.0.1.01
-	author： zsytssk 张世阳
+	common.css
+	version: 1.0.1.02
+	author: zsytssk
+	description: I wish and make it has a wide range of uses for my.
+	contact: zsytssk@gmail.com
 ------------------------------------------------*/
-
 /* RESET */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -31,9 +31,6 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-body {
-	line-height: 1;
-}
 ol, ul {
 	list-style: none;
 }
@@ -52,7 +49,7 @@ table {
 
 /* BASE */
 body {
-	color: #666;
+	color: #333;
 	font: 12px/1.5 'SimSun',tahoma,arial;
 }
 
@@ -119,7 +116,9 @@ a:hover {
 .yahei {
 	font-family: "Microsoft YaHei";
 }
-
+.ta-r {
+	text-align: right;
+}
 /* grid */
 .grid1 {
 
@@ -128,29 +127,20 @@ a:hover {
 /* head */
 h1,h2,h3,h4,h5,h6,
 strong {
-	color: #333;
 }
 h1,h2,h3,h4 {
-	font-weight: bold;
 }
 h2,h3,h4 {
-	line-height: 18px;
 }
 h1,h2 {
-	margin-bottom: 18px;
 }
 h1 {
-	font-size: 24px;
-	line-height: 36px;
 }
 h2 {
-	font-size: 16px;
 }
 h3 {
-	font-size: 1em;
 }
 h4 {
-	font-size: 10px;
 }
 
 /* margin */
@@ -173,23 +163,18 @@ h4 {
 	margin-bottom: 30px;
 }
 
-/*more*/
-.more {
-	text-align: right;
-}
-
 /* position */
-.pos_r {
+.pos-r {
 	position: relative;
 }
-.pos_f {
+.pos-f {
 	position: fixed;
 }
 /* space */
 
 /* tab */
 
-/* text box */
+/* txt area */
 
 /* widget */
 i[class^=icon-] {
@@ -198,11 +183,9 @@ i[class^=icon-] {
 	line-height: 0;
 }
 
-.icon-close:after { /* gte IE8 */
+.icon-close:after { /* work gte IE8 */
 	content: "×";
-	font-family: "\5B8B\4F53",sans-serif;
-	font-size: 18px;
-	line-height: 1;
+	font-family: 18px/1 "\5B8B\4F53",sans-serif;
 	padding: 2px;
 }
 
@@ -231,10 +214,13 @@ i[class^=icon-caret] {
 }
 /* other */
 .img-box {
-	
+	text-align: center;
+}
+.img-box {
+	vertical-align: middle;
 }
 .overlay {
-	
+
 }
 /* TABLET AND PHONE */
 @media screen and (max-device-width: 768px) {
