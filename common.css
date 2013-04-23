@@ -5,6 +5,7 @@
 	author: zsytssk
 	description: I wish and make it has a wide range of uses for my.
 	contact: zsytssk@gmail.com
+	last update: 04/23/2013 02:21
 ------------------------------------------------*/
 /* RESET */
 html, body, div, span, applet, object, iframe,
@@ -216,11 +217,13 @@ i[class^=icon-caret] {
 .img-box {
 	text-align: center;
 }
-.img-box {
+.img-box img {
+	max-height: 100%;
+	max-width: 100%;
 	vertical-align: middle;
 }
 .overlay {
-
+	background-color: rgba(0, 0, 0, .6);
 }
 /* TABLET AND PHONE */
 @media screen and (max-device-width: 768px) {

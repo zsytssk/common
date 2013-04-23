@@ -1,5 +1,5 @@
 /*------------------------------------------------
-  ie.css
+	ie.css
 	Version： 1.0.2
 	Author： zsytssk
 	Description: this is a extra css file for Ugly IE
@@ -22,19 +22,21 @@
 /*2* radius */
 
 /*2* rgba */
-
+.overlay {
+	background: transparent url(../images/blank.png) 0 0 repeat;
+}
 /* Default style */
 
 /* ie8 m-a  */
 
 /* layout */
 /*1* float */
-.ie6 .fl,
-.ie6 .fr {
+*html .fl,
+*html .fr {
 	display: inline;
 }
 
-.?? {
+*html .?? {
 	*zoom: 1;
 }
 /*1* inline block */
@@ -43,17 +45,17 @@
 	*zoom: 1;
 }
 
+/*1* after float*/
+*html .?? {
+	display: inline;
+	margin-left: 0px;
+	zoom: 1;
+}
+
 /*2* 3px */
 
 /*1* min */
 
-/*1* pos-f */
-*html .pos-r {
-	height: 1%;
-}
-*html .pos-f {
-	position: absolute;
-}
 
 /*1* PNG */
 
@@ -62,5 +64,12 @@
 	*min-height: 1%;
 	_height: 1%;
 	_overflow: visible;
+}
+/*1* pos-f */
+*html .pos-r {
+	height: 1%;
+}
+*html .pos-f {
+	position: absolute;
 }
 
