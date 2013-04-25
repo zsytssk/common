@@ -36,6 +36,13 @@
 	display: inline;
 }
 
+/*1* after float*/
+*html .?? {
+	display: inline;
+	margin-left: 0px;
+	zoom: 1;
+}
+
 *html .?? {
 	*zoom: 1;
 }
@@ -45,12 +52,6 @@
 	*zoom: 1;
 }
 
-/*1* after float*/
-*html .?? {
-	display: inline;
-	margin-left: 0px;
-	zoom: 1;
-}
 
 /*2* 3px */
 
