@@ -5,7 +5,7 @@
 	author: zsytssk
 	description: I wish and make it has a wide range of uses for my.
 	contact: zsytssk@gmail.com
-	last update: 04/23/2013 02:21
+	last update: 2013/07/24 03:18
 ------------------------------------------------*/
 /* RESET */
 html, body, div, span, applet, object, iframe,
@@ -67,13 +67,12 @@ a:hover {
 /* btn */
 
 /*clearfix*/
+.clearfix:before, .clearfix:after {
+	content:"";
+	display:table;
+}
 .clearfix:after{
-	clear: both;
-	content: ".";
-	display: block;
-	height: 0;
-	visibility: hidden;
-	font-size: 0;
+	clear:both;
 }
 
 /*color*/
@@ -186,7 +185,7 @@ i[class^=icon-] {
 
 .icon-close:after { /* work gte IE8 */
 	content: "×";
-	font-family: 18px/1 "\5B8B\4F53",sans-serif;
+	font: 18px/1.5 "SimSun",sans-serif;
 	padding: 2px;
 }
 
@@ -198,10 +197,10 @@ i[class^=icon-caret] {
 .icon-caret-left, .icon-caret-right {
 	border-color: transparent red;
 }
-.icon-caret-left {
+.icon-caret-right {
 	border-width: 20px 0 20px 20px;
 }
-.icon-caret-right {
+.icon-caret-left {
 	border-width: 20px 20px 20px 0 ;
 }
 .icon-caret-up, .icon-caret-down {
@@ -224,6 +223,20 @@ i[class^=icon-caret] {
 }
 .overlay {
 	background-color: rgba(0, 0, 0, .6);
+}
+.corner-box {
+	font-size: 20px;
+	line-height: 0.8;
+	position: relative;
+	width: 20px;
+}
+.corner-box .corner-bd {
+	color: red;
+}
+.corner-box .corner-bg {
+	color: #000;
+	position: absolute;
+	top: 1px;
 }
 /* TABLET AND PHONE */
 @media screen and (max-device-width: 768px) {

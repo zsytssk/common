@@ -1,6 +1,6 @@
 /*------------------------------------------------
 	ie.css
-	Version： 1.0.2
+	Version： 1.0.3
 	Author： zsytssk
 	Description: this is a extra css file for Ugly IE
 	Latest updates: 04/18/2013 11:12
@@ -18,8 +18,20 @@
 	line-height: 0;
 	zoom: 1;
 }
+*html .icon-caret-down,
+*html .icon-caret-left,
+*html .icon-caret-right,
+*html .icon-caret-up {
+	border-style: solid;
+	height: 0;
+	width: 0;
+	zoom: 1;
+}
+/* IE6 hver */
 
-/*2* radius */
+/*1* radius */
+
+/*1* opacity */
 
 /*2* rgba */
 .overlay {
@@ -29,48 +41,58 @@
 
 /* ie8 m-a  */
 
-/* layout */
-/*1* float */
+/* float */
 *html .fl,
 *html .fr {
 	display: inline;
 }
 
-/*1* after float*/
-*html .?? {
+*html .??{ /* after float */
 	display: inline;
-	margin-left: 0px;
+	margin-left: 0;
+	vertical-align: top;
 	zoom: 1;
 }
 
 *html .?? {
 	*zoom: 1;
 }
+
 /*1* inline block */
 .d-ib {
 	*display: inline;
 	*zoom: 1;
 }
 
+/* after float*/
+.afterFloat {
+	*display: inline;
+	*margin-left: 0px;
+	*zoom: 1;
+}
 
-/*2* 3px */
-
-/*1* min */
+/*1* 3px */
 
 
-/*1* PNG */
 
-/*1* other */
-.clearfix{
+/* PNG */
+
+/* size */
+
+/* other */
+.clearfix {
 	*min-height: 1%;
 	_height: 1%;
 	_overflow: visible;
 }
-/*1* pos-f */
+
+/* pos-f */
 *html .pos-r {
 	height: 1%;
 }
 *html .pos-f {
 	position: absolute;
 }
+
+/* pos-r */
 
