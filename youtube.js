@@ -1,10 +1,14 @@
 // ==UserScript==
 // @name       youtube 调节字幕
-// @namespace  http://use.i.E.your.homepage/
+// @namespace   https://raw.githubusercontent.com/zsytssk/common/master/
+// @updateURL   https://raw.githubusercontent.com/zsytssk/common/master/youtube.js
+// @downloadURL https://raw.githubusercontent.com/zsytssk/common/master/youtube.js
 // @version    0.1
 // @description  学习英语,让youtube 视频 字幕可选择, ctrl键控制字幕显隐, 空格控制暂停播放
-// @match     https://*.youtube.com/*
-// @copyright  2014+, You
+// @include     https://*.youtube.com/*
+// @date        2014/10/26
+// @modified    2014/10/26
+// @copyright  2014+, zsytssk@gmail.com
 // @run-at document-end
 // ==/UserScript==
 var inWrite = false;
@@ -36,3 +40,4 @@ document.onkeydown=function(e) {
     }
 }
 console.log('&search_sort=video_date_uploaded');
+console.log('test sync');
