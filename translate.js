@@ -9,11 +9,22 @@
 // @date        2014/10/31 10:30
 // @modified    2014/10/31 10:30
 // @copyright  2014+, zsytssk@gmail.com
+// @grant unsafeWindow
 // @run-at document-end
 // ==/UserScript==
 
 var inWrite = false;
 var cb = document.getElementById('gt-src-listen');
+var event1 = new MouseEvent('mousedown', {
+    'view': unsafeWindow,
+    'bubbles': true,
+    'cancelable': true
+});
+var event2 = new MouseEvent('mouseup', {
+    'view': unsafeWindow,
+    'bubbles': true,
+    'cancelable': true
+});
 
 document.onkeydown=function(e) {
     var ekc= e.keyCode;
@@ -40,21 +51,9 @@ for (var i = 0; i < $inputs.length; i++) {
 };
 
 function simulateMousedown() {
-	var event1 = new MouseEvent('mousedown', {
-		'view': window,
-		'bubbles': true,
-		'cancelable': true
-	});
-
 	cb.dispatchEvent(event1);
 }
 
 function simulateMouseup() {
-	var event2 = new MouseEvent('mouseup', {
-		'view': window,
-		'bubbles': true,
-		'cancelable': true
-	});
-
 	cb.dispatchEvent(event2);
 }
