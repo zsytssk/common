@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name       translate.google 空格 自动发音
 // @namespace   https://raw.githubusercontent.com/zsytssk/common/master/
-// @updateURL   https://raw.githubusercontent.com/zsytssk/common/master/youtube.js
-// @downloadURL https://raw.githubusercontent.com/zsytssk/common/master/youtube.js
+// @updateURL   https://raw.githubusercontent.com/zsytssk/common/master/translate.js
+// @downloadURL https://raw.githubusercontent.com/zsytssk/common/master/translate.js
 // @version    0.1
 // @description  学习英语,让youtube 视频 字幕可选择, ctrl键控制字幕显隐, 空格控制暂停播放
 // @include     https://translate.google.com/*
