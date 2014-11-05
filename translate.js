@@ -14,7 +14,8 @@
 // ==/UserScript==
 
 var inWrite = false;
-var cb = document.getElementById('gt-src-listen');
+var voice = document.getElementById('gt-src-listen');
+var star = document.querySelector('#gt-pb-star div');
 var event1 = new MouseEvent('mousedown', {
     'view': unsafeWindow,
     'bubbles': true,
@@ -30,13 +31,21 @@ document.onkeydown=function(e) {
     var ekc= e.keyCode;
     if( inWrite || ekc != '32') return;
     e.preventDefault();
-    simulateMousedown();
+    if (e.ctrlKey) {
+        simulateMousedown(star);
+    } else {
+        simulateMousedown(voice);
+    }
 }
 document.onkeyup=function(e) {
     var ekc= e.keyCode;
     if( inWrite || ekc != '32') return;
     e.preventDefault();
-    simulateMouseup();
+    if (e.ctrlKey) {
+        simulateMouseup(star);
+    } else {
+        simulateMouseup(voice);
+    }
 }
 
 // 打字 禁用上面快捷键
@@ -50,10 +59,10 @@ for (var i = 0; i < $inputs.length; i++) {
     }
 };
 
-function simulateMousedown() {
-	cb.dispatchEvent(event1);
+function simulateMousedown(obj) {
+    obj.dispatchEvent(event1);
 }
 
-function simulateMouseup() {
-	cb.dispatchEvent(event2);
+function simulateMouseup(obj) {
+    obj.dispatchEvent(event2);
 }
