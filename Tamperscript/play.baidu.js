@@ -6,20 +6,28 @@
 // @version    0.1
 // @description  学习英语,让youtube 视频 字幕可选择, ctrl键控制字幕显隐, 空格控制暂停播放
 // @include     https://*.youtube.com/*
-// @date        2014/10/25
-// @modified    2014/10/25
+// @grant GM_addStyle
+// @date        2015/04/13 10:15
+// @modified    2015/04/13 10:15
 // @copyright  2014+, zsytssk@gmail.com
 // @run-at document-end
 // ==/UserScript==
 
 var inWrite = false;
 var firstType = true;
+GM_addStyle('\
+    #movie_player {-webkit-user-select: all !important;} \
+    .ytp-subtitles-player-content {z-index: 998 !important;} \
+    .caption-window { pointer-events: auto !important;} \
+    .html5-video-controls {z-index: 999 !important}\
+    .ytp-dialog-holder {z-index: 1000 !important}\
+')
 
 document.onkeydown=function(e) {
+    var _movie_player = document.getElementById('movie_player');
     var ekc= e.keyCode;
-    if( !document.querySelector('#movie_player') || inWrite || ekc != '32') return;
+    if( !_movie_player || inWrite || ekc != '32') return;
     if (firstType) {
-        document.querySelector('#movie_player').style.webkitUserSelect = 'text';
         firstType = false;
     }
     e.preventDefault();
@@ -41,6 +49,3 @@ for (var i = 0; i < $inputs.length; i++) {
         inWrite = false;
     }
 };
-
-// 搜索时, 将这个粘贴到url最后 按时间顺序
-console.log('&search_sort=video_date_uploaded');
