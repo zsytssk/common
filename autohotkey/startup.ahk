@@ -27,7 +27,7 @@ SetTitleMatchMode RegEx
 		activew("ahk_class PX_WINDOW_CLASS")
 	}
 	return
-+Tab::
+^Tab::
 	if (isActiveW("ahk_class PX_WINDOW_CLASS") || isActiveW("ahk_class Chrome_WidgetWin_1")) {
 		activew("ahk_class Photoshop")
 	} else {
