@@ -17,6 +17,21 @@ SetTitleMatchMode RegEx
 	send !{right}
 	return
 
+; GitHub open folder in sublime
+#IfWinActive, ahk_exe GitHub.exe
+^!o::
+	Send {AppsKey}{Tab}{Tab}{Tab}{Enter}
+	Send """D:\Program Files\Sublime Text 3\sublime_text.exe""" \. && exit
+	send {Enter}
+	return
+
+; 调出sublime project 切换
+#IfWinExist, ahk_class PX_WINDOW_CLASS
+^!p::
+	activew("ahk_class PX_WINDOW_CLASS")
+	Send ^!p
+	return
+
 ; 调试html, 跳转chrome 刷新 再回到sublime
 #IfWinExist, .*job.* Sublime Text
 !Tab::
