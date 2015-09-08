@@ -20,8 +20,11 @@ SetTitleMatchMode RegEx
 ; GitHub open folder in sublime
 #IfWinActive, ahk_exe GitHub.exe
 ^!o::
+	; clipboard:= "'D:\Program Files\Sublime Text 3\sublime_text.exe' . && exit"
+	clipboard:= "atom . && exit"
 	Send {AppsKey}{Tab}{Tab}{Tab}{Enter}
-	Send """D:\Program Files\Sublime Text 3\sublime_text.exe""" \. && exit
+	sleep 333
+	send ^v
 	send {Enter}
 	return
 
