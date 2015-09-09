@@ -1,0 +1,57 @@
+@charset 'utf-8';
+.animate {
+	opacity: 1;
+	transition: all 900ms ease;
+	transform: scale(1) rotate(0deg) translateX(0px) translateY(0px) skewX(0deg) skewY(0deg);
+}
+.animate-slideup,
+.animate-slidedown,
+.animate-slidefromleft,
+.animate-slidefromright {
+	opacity: 0;
+}
+.animate-slideup {
+	transform:  translateY(20%);
+}
+.animate-slidedown {
+	transform:  translateY(-100%);
+}
+.animate-slidefromleft {
+	transform:  translateX(-50%);
+}
+.animate-slidefromright {
+	transform:  translateX(50%);
+}
+
+/*
+.cases-list li:hover {
+	transition: all ease-in .5s;
+	transform: scale(1.2, 1.2);
+}
+.Index .product .img-box:before {
+	transition: all 500ms ease;
+}
+.Index .wifisolution .con li .img-box .hide {
+	transition: all 700ms ease;
+}
+.cases-box .trigger .cur img {
+	animation: upandown 1s ease-in-out infinite;
+	-webkit-animation: upandown 1s ease-in-out infinite;
+}
+@-webkit-keyframes upandown {
+	0%, 100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-30%);
+	}
+}
+@keyframes upandown {
+	0%, 100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-30%);
+	}
+}
+*/
