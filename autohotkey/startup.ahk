@@ -33,8 +33,8 @@ f12::
 	return
 ; open folder in textEditor
 ^e::
-	; clipboard:= "'D:\Program Files\Sublime Text 3\sublime_text.exe' . && exit"
-	clipboard:= "atom . && exit"
+	clipboard:= """D:\Program Files\Sublime Text 3\sublime_text.exe"" . && exit"
+	; clipboard:= "atom . && exit"
 	Send {AppsKey}{Tab}{Tab}{Tab}{Enter}
 	sleep 333
 	send ^v

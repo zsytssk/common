@@ -1,8 +1,9 @@
-﻿#MaxHotkeysPerInterval 150
-#SingleInstance force
-Thread, NoTimers
-FileSelectFolder, OutputVar,, 3
-Thread, NoTimers, false
+﻿
+; #MaxHotkeysPerInterval 150
+; #SingleInstance force
+; Thread, NoTimers
+; FileSelectFolder, OutputVar,, 3
+; Thread, NoTimers, false
 
 
 ; param=E:\zsytssk\GitHub\common
