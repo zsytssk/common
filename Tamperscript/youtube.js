@@ -14,10 +14,10 @@
 // ==/UserScript==
 
 GM_addStyle('\
-    #movie_player {-webkit-user-select: all !important;} \
-    .caption-window { pointer-events: auto !important;} \
-    .html5-video-controls {z-index: 999 !important}\
-    .ytp-dialog-holder {z-index: 1000 !important}\
+	#movie_player {-webkit-user-select: all !important;} \
+	.caption-window { pointer-events: auto !important;} \
+	.html5-video-controls {z-index: 999 !important}\
+	.ytp-dialog-holder {z-index: 1000 !important}\
 ');
 
 var inWrite = false;
@@ -29,6 +29,7 @@ var dom_subtitles_button = document.querySelector('.ytp-subtitles-button');
 var dom_player = document.getElementById('movie_player');
 
 document.onkeydown = function (e) {
+	bindEventToInput();
 	var ekc = e.keyCode;
 	if(!dom_player || inWrite || ekc !== 32) {
 		return;
@@ -45,15 +46,20 @@ document.onkeydown = function (e) {
 	}
 };
 
-// 打字 禁用上面快捷键
-var $inputs = document.querySelectorAll('input, textarea');
-for(var i = 0; i < $inputs.length; i++) {
-	$inputs[i].onfocus = function () {
-		inWrite = true;
-	};
-	$inputs[i].onblur = function () {
-		inWrite = false;
-	};
+bindEventToInput();
+
+function bindEventToInput() {
+	// 打字 禁用上面快捷键
+	var $inputs = document.querySelectorAll('body /deep/ input, body /deep/ textarea');
+	for(var i = 0; i < $inputs.length; i++) {
+		$inputs[i].onfocus = function () {
+			console.log(this);
+			inWrite = true;
+		};
+		$inputs[i].onblur = function () {
+			inWrite = false;
+		};
+	}
 }
 
 function toggleSubtitles() {
