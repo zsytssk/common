@@ -1,12 +1,12 @@
 ﻿#MaxHotkeysPerInterval 150
 #SingleInstance force
 SetTitleMatchMode RegEx
+
 ; Sublime Text 快捷键
 #IfWinActive, ahk_class PX_WINDOW_CLASS
 !h::
 	send !{Left}
 	return
-
 !j::
 	send {down}
 	return
@@ -16,6 +16,7 @@ SetTitleMatchMode RegEx
 !l::
 	send !{right}
 	return
+
 
 ; GitHub Desktop shortcut
 #IfWinActive, ahk_exe GitHub.exe
