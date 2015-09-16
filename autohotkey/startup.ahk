@@ -34,11 +34,11 @@ f12::
 	return
 ; open folder in textEditor
 ^e::
-	clipboard:= """D:\Program Files\Sublime Text 3\sublime_text.exe"" . && exit"
-	; clipboard:= "atom . && exit"
+	textEditor:= """D:\Program Files\Sublime Text 3\sublime_text.exe"" . && exit"
+	; textEditor:= "atom . && exit"
 	Send {AppsKey}{Tab}{Tab}{Tab}{Enter}
-	sleep 333
-	send ^v
+	WinWaitActive, ahk_exe cmd.exe
+	sendbyclip(textEditor)
 	send {Enter}
 	return
 
@@ -127,4 +127,13 @@ isActiveW(title) { ; 激活窗口函数
 		return true
 	}
 	return false
+}
+
+sendbyclip(content){
+	clipSaved := ClipboardAll
+	Clipboard := content
+	clipwait
+	send ^{v}
+	Clipboard := clipSaved
+	clipSaved =
 }
