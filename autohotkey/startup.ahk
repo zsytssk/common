@@ -1,4 +1,5 @@
-﻿#MaxHotkeysPerInterval 150
+﻿; 这里面的函数能不能 放在另外一个文件中
+#MaxHotkeysPerInterval 150
 #SingleInstance force
 SetTitleMatchMode RegEx
 
