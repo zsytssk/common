@@ -1,8 +1,9 @@
 // 正式插件 需要 css dom 的配合
 // .img-box>img[src="" data-bgimg=""]
 // $(".img-box").zsyZoom();
-;(function($) {
-	$.fn.zsyZoom = function(options) {
+;
+(function ($) {
+	$.fn.zsyZoom = function (options) {
 		var default_config = {
 			zoombox: '.zsyzoom-box' // zoom-result-box append 的位置
 		};
@@ -10,9 +11,10 @@
 
 		var $oi = $(this);
 		var $bi, $zp, $zr;
-		var scale = 0, moveScale = 0;
+		var scale = 0,
+			moveScale = 0;
 
-		$oi.mouseenter(function(event) {
+		$oi.mouseenter(function (event) {
 			$oi.append('<span class="zsyzoomPup"></span>');
 			$(cfg.zoombox).append('<div class="zsyzoom-result-box"><img src="' + $oi.find('img').data('bgimg') + '" alt="" /></div>');
 
@@ -21,6 +23,10 @@
 			$zr = $('.zsyzoom-result-box');
 
 			scale = $bi.width() / $zr.width();
+			if(scale <= 1) {
+				$zr.hide();
+				return false;
+			}
 
 			$zp.width($oi.width() / scale);
 			$zp.height($oi.height() / scale);
@@ -28,13 +34,13 @@
 			moveScale = ($bi.width() - $zr.width()) / ($oi.width() - $zp.width());
 		});
 
-		$oi.mouseleave(function(event) {
+		$oi.mouseleave(function (event) {
 			$zp.add($zr).remove();
 		});
 
-		$oi.mousemove(function(event) {
+		$oi.mousemove(function (event) {
 			// zoomPup
-			if (!$zp) {
+			if(!$zp) {
 				return;
 			}
 			var cur_pX = event.pageX - $oi.offset().left - $zp.width() / 2;
@@ -43,14 +49,14 @@
 			var cur_maX = $oi.width() - $zp.width();
 			var cur_maY = $oi.width() - $zp.width();
 			// zoomPup超过边界 处理
-			if (cur_pX < 0) {
+			if(cur_pX < 0) {
 				cur_pX = 0;
-			} else if (cur_pX > cur_maX) {
+			} else if(cur_pX > cur_maX) {
 				cur_pX = cur_maX;
 			}
-			if (cur_pY < 0) {
+			if(cur_pY < 0) {
 				cur_pY = 0;
-			} else if (cur_pY > cur_maX) {
+			} else if(cur_pY > cur_maX) {
 				cur_pY = cur_maY;
 			}
 

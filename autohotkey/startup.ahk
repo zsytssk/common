@@ -52,16 +52,16 @@ f12::
 
 ; 调试html, 跳转chrome 刷新 再回到sublime
 #IfWinExist, .*job.* Sublime Text
-!Tab::
-	if (isActiveW("ahk_class PX_WINDOW_CLASS") || isActiveW("ahk_class Photoshop")) {
+!1::
+	if (isExistW("ahk_class PX_WINDOW_CLASS") && !isActiveW("ahk_class Chrome_WidgetWin_1")) {
 		activew("ahk_class Chrome_WidgetWin_1")
 		send {f5}
 	} else {
 		activew("ahk_class PX_WINDOW_CLASS")
 	}
 	return
-^Tab::
-	if (isActiveW("ahk_class PX_WINDOW_CLASS") || isActiveW("ahk_class Chrome_WidgetWin_1")) {
+^2::
+	if (isExistW("ahk_class PX_WINDOW_CLASS") && !isActiveW("ahk_class Chrome_WidgetWin_1")) {
 		activew("ahk_class Photoshop")
 	} else {
 		send {Esc}
@@ -124,6 +124,13 @@ activew(title) { ; 激活窗口函数
 }
 isActiveW(title) { ; 激活窗口函数
 	IfWinActive %title%
+	{
+		return true
+	}
+	return false
+}
+isExistW(title) { ; 激活窗口函数
+	IfWinExist %title%
 	{
 		return true
 	}
