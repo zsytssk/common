@@ -48,10 +48,16 @@ em {
 /* opacity */
 
 /* rgba */
-.overlay {
-	background: transparent url(../images/blank.png) 0 0 repeat;
+.Index .floor.idea li:hover .txt {
+	background: transparent url(images/rgba1.png) 0 0 repeat;
 }
-
+.AboutUs .Header,
+.Idea .Header {
+	background: transparent url(images/rgba2.png) 0 0 repeat;
+}
+.pop-overlay {
+	background: transparent url(images/rgba3.png) 0 0 repeat;
+}
 /* size */
 
 /* position */
@@ -60,5 +66,5 @@ em {
 }
 .img-box img {
 	width: auto;
-	height: auto;
+	height: 100%;
 }

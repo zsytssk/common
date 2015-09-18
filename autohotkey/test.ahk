@@ -1,4 +1,21 @@
-﻿
+﻿!t::
+	if (isExistW("ahk_class Chrome_WidgetWin_1", "ahk_class PX_WINDOW_CLASS")) {
+		MsgBox, hhha
+	}
+	Return
+
+isExistW(params*) { ; 激活窗口函数
+	for index, param in params {
+		IfWinNotExist, %param%
+		{
+			Break
+		}
+		if (index == params.MaxIndex()) {
+			Return True
+		}
+	}
+	Return False
+}
 ; #MaxHotkeysPerInterval 150
 ; #SingleInstance force
 ; Thread, NoTimers

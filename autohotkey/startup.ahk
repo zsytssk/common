@@ -53,7 +53,7 @@ f12::
 ; 调试html, 跳转chrome 刷新 再回到sublime
 #IfWinExist, .*job.* Sublime Text
 !1::
-	if (isExistW("ahk_class PX_WINDOW_CLASS") && !isActiveW("ahk_class Chrome_WidgetWin_1")) {
+	if (isExistW("ahk_class PX_WINDOW_CLASS", "ahk_class Chrome_WidgetWin_1") && !isActiveW("ahk_class Chrome_WidgetWin_1")) {
 		activew("ahk_class Chrome_WidgetWin_1")
 		send {f5}
 	} else {
@@ -61,7 +61,7 @@ f12::
 	}
 	return
 ^2::
-	if (isExistW("ahk_class PX_WINDOW_CLASS") && !isActiveW("ahk_class Chrome_WidgetWin_1")) {
+	if (isExistW("ahk_class PX_WINDOW_CLASS", "ahk_class Photoshop") && !isActiveW("ahk_class Photoshop")) {
 		activew("ahk_class Photoshop")
 	} else {
 		send {Esc}
@@ -129,12 +129,17 @@ isActiveW(title) { ; 激活窗口函数
 	}
 	return false
 }
-isExistW(title) { ; 激活窗口函数
-	IfWinExist %title%
-	{
-		return true
+isExistW(params*) { ; 激活窗口函数
+	for index, param in params {
+		IfWinNotExist, %param%
+		{
+			Break
+		}
+		if (index == params.MaxIndex()) {
+			Return True
+		}
 	}
-	return false
+	Return False
 }
 
 sendbyclip(content){
