@@ -23,6 +23,7 @@ GM_addStyle('\
 var inWrite = false;
 var firstType = true;
 
+var dom_title = document.querySelector('#watch-headline-title');
 var dom_video = document.querySelector('video');
 var dom_subtitles = document.querySelector('.ytp-subtitles-player-content');
 var dom_subtitles_button = document.querySelector('.ytp-subtitles-button');
@@ -39,7 +40,14 @@ document.onkeydown = function (e) {
 	}
 	e.preventDefault();
 	if(e.ctrlKey === false) {
-		dom_video.click();
+		if(e.target.classList.contains('html5-video-player')) {
+			return false;
+		}
+		if(dom_video.paused) {
+			dom_video.play();
+		} else {
+			dom_video.pause();
+		}
 	}
 	if(e.ctrlKey === true) {
 		toggleSubtitles();

@@ -23,25 +23,25 @@ GM_addStyle('\
     .ytp-dialog-holder {z-index: 1000 !important}\
 ')
 
-document.onkeydown=function(e) {
+document.onkeydown = function (e) {
     var _movie_player = document.getElementById('movie_player');
-    var ekc= e.keyCode;
-    if( !_movie_player || inWrite || ekc != '32') return;
-    if (firstType) {
+    var ekc = e.keyCode;
+    if(!_movie_player || inWrite || ekc != '32') return;
+    if(firstType) {
         firstType = false;
     }
     e.preventDefault();
-    if (e.ctrlKey == false) {
+    if(e.ctrlKey == false) {
         document.querySelector('video').click();
     }
-    if (e.ctrlKey == true) {
+    if(e.ctrlKey == true) {
         document.querySelector('#subtitles_button').click();
     }
 }
 
 // 打字 禁用上面快捷键
 var $inputs = document.querySelectorAll('input, textarea');
-for (var i = 0; i < $inputs.length; i++) {
+for(var i = 0; i < $inputs.length; i++) {
     $inputs[i].onfocus = function () {
         inWrite = true;
     }
