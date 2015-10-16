@@ -60,7 +60,7 @@ f12::
 		activew("ahk_class PX_WINDOW_CLASS")
 	}
 	return
-^2::
+!2::
 	if (isExistW("ahk_class PX_WINDOW_CLASS", "ahk_class Photoshop") && !isActiveW("ahk_class Photoshop")) {
 		activew("ahk_class Photoshop")
 	} else {

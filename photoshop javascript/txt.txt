@@ -1,0 +1,24 @@
+## 拿到各个位置的坐标  
+-| 算出指定位置的坐标  
+-> 图片标记 在获得标记位置的坐标  
+
+☐ 可用方法  
+-> 用vb  
+---&&---  
+-| 用其他的软件  
+---&&---  
+-| 路径  
+-> actionscript  
+-> https://github.com/andyhawkes/ps-paths-to-imagemap/blob/master/PathsToImageMap.jsx  
+-> https://www.google.co.id/search?q=photoshop+javascript+selection&oq=photoshop+javascript+selection&aqs=chrome..69i57.18848j0j4&sourceid=chrome&es_sm=93&ie=UTF-8  
+
+
+-> 获取文字图层  
+-> 建立选取  
+-> 获取坐标  
+-> 文字 + 坐标  
+
+☐ 需不需要导入到excel里面去
+
+## 参考
+-| http://stackoverflow.com/questions/14571008/photoshop-scripting-changing-text-of-a-text-layer
