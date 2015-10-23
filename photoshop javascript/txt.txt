@@ -1,3 +1,5 @@
+-> https://packagecontrol.io/packages/ExtendScript  
+
 ## 拿到各个位置的坐标  
 -| 算出指定位置的坐标  
 -> 图片标记 在获得标记位置的坐标  
@@ -18,7 +20,18 @@
 -> 获取坐标  
 -> 文字 + 坐标  
 
-☐ 需不需要导入到excel里面去
+☐ photoshop javascript file Output excel  
+-> https://vimeo.com/59333321  
+-> 能不能export... 引入默认 photoshop 处理 脚本,借用里面的函数  
+-> ContactSheet11  
 
-## 参考
--| http://stackoverflow.com/questions/14571008/photoshop-scripting-changing-text-of-a-text-layer
+## 参考  
+-| http://stackoverflow.com/questions/14571008/photoshop-scripting-changing-text-of-a-text-layer  
+
+## 问题  
+-? 上下左右 的位置  
+-> 相应的文字按钮变化怎么处理  
+-> 不需要处理  
+
+-| 数据排序
+

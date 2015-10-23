@@ -1,0 +1,7 @@
+-| 图层组  
+currentLayer.typename == "LayerSet"  
+
+-| 图层  
+(currentLayer.visible) && (currentLayer.kind == LayerKind.TEXT)  
+currentLayer.name  
+currentLayer.textItem.contents
