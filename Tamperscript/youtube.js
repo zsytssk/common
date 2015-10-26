@@ -61,7 +61,6 @@ function bindEventToInput() {
 	var $inputs = document.querySelectorAll('body /deep/ input, body /deep/ textarea');
 	for(var i = 0; i < $inputs.length; i++) {
 		$inputs[i].onfocus = function () {
-			console.log(this);
 			inWrite = true;
 		};
 		$inputs[i].onblur = function () {
@@ -73,10 +72,10 @@ function bindEventToInput() {
 function toggleSubtitles() {
 	dom_subtitles_button.click();
 	setTimeout(function () {
-		if(dom_subtitles.childNodes.length) {
+		if(dom_subtitles_button.getAttribute('aria-pressed')) {
 			dom_subtitles.style.zIndex = '998';
 		} else {
 			dom_subtitles.style.zIndex = '0';
 		}
-	}, 1000);
+	}, 300);
 }
