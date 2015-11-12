@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<!-- css -->
+	<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+	<!-- datetimepicker -->
+	<link rel="stylesheet" href="jquery.datetimepicker.css">
+	<script src="jquery.datetimepicker.full.min.js"></script>
+</head>
+
+<body>
+	<input type="text" name="" id="datetimepicker">
+	<script>
+	$('#datetimepicker').datetimepicker({
+		format: 'Y-m-d H:i',
+		minDate: 0,
+		minTime: '7:00',
+		maxTime: '22:00',
+		step: 30
+	});
+	$.datetimepicker.setLocale('zh');
+	</script>
+</body>
+
+</html>

@@ -1,3 +1,4 @@
+-| https://github.com/jwa107/Photoshop-Export-Layers-to-Files-Fast/blob/master/Export%20Layers%20To%20Files%20(Fast).jsx
 -> https://packagecontrol.io/packages/ExtendScript  
 
 ## 拿到各个位置的坐标  

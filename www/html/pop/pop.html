@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<!-- css -->
+	<style>
+
+	</style>
+	<!-- js -->
+	<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+</head>
+
+<body>
+	<section class="pop-overlay">
+		<div class="pop pop-prompt" id="pop-prompt">
+			<a class="close"></a>
+			<div class="pop-con">
+				<div class="txt"><span>请输入你的密码</span></div>
+				<div class="input-box">
+					<input type="text" value="sdfsdfs">
+				</div>
+				<div class="btn-box">
+					<a class="btn1 confirm">确认</a>
+					<a class="btn2 cancel">取消</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="pop-overlay">
+		<div class="pop pop-tip" id="pop-tip">
+			<a class="close"></a>
+			<div class="pop-con">
+				<div class="icon-box"><i class="icon-tip"></i></div>
+				<div class="txt"><span>您的订单提交成功！您的订单提交成功！您的订单提交成功！</span></div>
+				<div class="btn-box">
+					<a class="btn1 confirm">确认</a>
+					<a class="btn2 cancel">取消</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script>
+	// alert 如果有callback就是confirm
+	function alertPop(type, txt, callback) {
+		if (type === 'error') {
+			$('.pop-tip .icon-box i').addClass('icon-err');
+		} else {
+			$('.pop-tip .icon-box i').removeClass('icon-err');
+		}
+		if (callback) {
+			$('.pop-tip .btn-box .cancel').show();
+		} else {
+			$('.pop-tip .btn-box .cancel').hide();
+		}
+
+		$('.pop-tip .txt span').html(txt);
+		$('.pop-tip').add($('.pop-tip').parent()).show();
+
+		$('.pop-tip .confirm').one('click', function(event) {
+			$(this).parents('.pop').find('.close').click();
+			if (callback) {
+				callback(true);
+			}
+		});
+	}
+	// promptTip 可以输入
+	function promptPop(txt, defaultval, callback) {
+		$('.pop-prompt .txt span').html(txt);
+		$('.pop-prompt').add($('.pop-prompt').parent()).show();
+		var $input = $('.pop-prompt .input-box input');
+		if (defaultval) {
+			$input.val(defaultval);
+			$input.focus().select();
+		}
+		$('.pop-prompt .confirm').one('click', function(event) {
+			$(this).parents('.pop').find('.close').click();
+			callback($input.val());
+		});
+	}
+	</script>
+</body>
+
+</html>
