@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+<!-- 微信不支持 -->
+<!--  不能点击太快 -->
+
+<head>
+	<meta charset="UTF-8">
+	<title>test1</title>
+	<!-- css -->
+	<link rel="stylesheet" href="style/style.css" charset="utf-8">
+	<!-- js -->
+	<script src="js/jquery-2.1.4.min.js"></script>
+</head>
+
+<body>
+	<button style="display: block; width: 100px; height: 30px; margin: 0 auto 20px;">调换</button>
+	<div class="animate-box">
+		<div class="phone-box">
+			<div class="positive cur"><img src="style/images/positive.jpg" alt=""></div>
+			<div class="obverse"><img src="style/images/obverse.jpg" alt=""></div>
+			<div class="bottom"><img src="style/images/bottom.jpg" alt=""></div>
+		</div>
+	</div>
+	<script>
+	// css 样式变化表
+	var transitions = {
+		'positive': {
+			'in': {
+				'opacity': '0',
+				'-webkit-transform': 'perspective(900px) rotateX(90deg) rotateY(0)',
+				'-webkit-transform-origin': 'center bottom 0px',
+				'-webkit-perspective-origin': 'center bottom',
+				'-webkit-transition': 'all 0s linear'
+			},
+			'cur': {
+				'opacity': '1',
+				'-webkit-transform': 'perspective(900px) rotateX(0) rotateY(0)',
+				'-webkit-transition': 'opacity .2s .5s linear, -webkit-transform .5s .5s linear'
+			},
+			'out': {
+				'opacity': '0',
+				'-webkit-transform': 'perspective(900px) rotateX(0) rotateY(90deg)',
+				'-webkit-transform-origin': 'center center 0',
+				'-webkit-perspective-origin': 'center center',
+				'-webkit-transition': 'all .25s linear'
+			}
+		},
+		'obverse': {
+			'in': {
+				'opacity': '0',
+				'-webkit-transform': 'perspective(900px) rotateX(0) rotateY(-180deg)',
+				'-webkit-transition': 'all 0s linear',
+			},
+			'cur': {
+				'opacity': '1',
+				'-webkit-transform': 'perspective(900px) rotateX(0) rotateY(0)',
+				'-webkit-transform-origin': 'center center 0',
+				'-webkit-transition': 'opacity .25s linear, -webkit-transform .5s linear',
+			},
+			'out': {
+				'opacity': '0',
+				'-webkit-transform': 'perspective(900px) rotateX(90deg) rotateY(0)',
+				'-webkit-transform-origin': 'center bottom 0px',
+				'-webkit-transition': 'opacity .2s .5s linear, -webkit-transform .5s linear'
+			}
+		},
+		'bottom': {
+			'in': {
+				'opacity': '0',
+				'bottom': '0',
+				'-webkit-transition': 'all 0s'
+			},
+			'cur': {
+				'opacity': 1,
+				'bottom': '50%',
+				'-webkit-transition': 'opacity .2s .5s linear, bottom .5s .7s linear',
+			},
+			'out': {
+				'opacity': '0',
+				'bottom': '0',
+				'-webkit-transition': 'bottom .5s linear, opacity .2s .5s linear',
+			}
+		}
+	};
+
+	var i = 0;
+	var istranstion = false; // 判断当前是否有动画
+	$('button').click(function(event) {
+		if (istranstion) {
+			return true;
+		}
+		istranstion = true;
+		i++;
+		if (i === 3) {
+			i = 0;
+		}
+		changeTo(i);
+	});
+	// 切换手机部位
+	function changeTo(i) {
+		var $cur = $('.phone-box > div.cur');
+		var $next = $('.phone-box > div').eq(i);
+		var curname = $cur[0].classList[0];
+		var nextname = $next[0].classList[0];
+		$next.css(transitions[nextname].in);
+		setTimeout(function() {
+			$cur.css(transitions[curname].out);
+			$next.css(transitions[nextname].cur);
+		}, 100);
+
+		$cur.one('webkitTransitionEnd', function(event) {
+			if ($cur.hasClass(curname)) {
+				$cur.removeClass('cur');
+				$next.addClass('cur');
+				istranstion = false;
+			}
+		});
+	}
+	changeTo(i);
+	</script>
+</body>
+
+</html>

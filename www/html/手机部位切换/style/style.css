@@ -1,0 +1,37 @@
+@charset 'utf-8';
+/* tab*/
+body {
+	background-color: #f3f3f3;
+}
+.animate-box {
+	margin: auto;
+	width: 350px;
+
+	-webkit-perspective: 1200px;
+	perspective: 1200px;
+}
+.phone-box {
+	-webkit-transform: rotateY(0deg) rotateX(0deg);
+	width: 350px;
+	height: 656px;
+	position: relative;
+	transform-style: preserve-3d;
+}
+.phone-box > div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	-webkit-perspective-origin: center bottom;
+}
+.phone-box img {
+	vertical-align: top;
+	width: 100%;
+	height: auto;
+}
+
+/*animate*/
+.phone-box .bottom {
+	bottom: 0;
+	top: auto;
+}

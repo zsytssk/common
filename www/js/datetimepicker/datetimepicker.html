@@ -14,12 +14,26 @@
 <body>
 	<input type="text" name="" id="datetimepicker">
 	<script>
+	var today = new Date();
 	$('#datetimepicker').datetimepicker({
 		format: 'Y-m-d H:i',
 		minDate: 0,
-		minTime: '7:00',
+		minTime: 0,
 		maxTime: '22:00',
-		step: 30
+		step: 30,
+		onSelectDate: function(ct, $i) {
+			// 不容许选择今天过去的时间
+			var today = new Date();
+			if (ct > today) {
+				$i.datetimepicker({
+					minTime: '7:00'
+				});
+			} else {
+				$i.datetimepicker({
+					minTime: 0
+				});
+			}
+		}
 	});
 	$.datetimepicker.setLocale('zh');
 	</script>
