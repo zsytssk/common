@@ -89,10 +89,10 @@ sleep, 2000
 baicizhan(8)
 return
 !Tab::
-	if (isActiveW("ahk_class Chrome_WidgetWin_1")) {
+	if (isActiveW("百词斩.*")) {
 		activew("ahk_class PX_WINDOW_CLASS")
 	} else {
-		activew("ahk_class Chrome_WidgetWin_1")
+		activew("百词斩.*")
 	}
 	return
 
