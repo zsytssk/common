@@ -40,14 +40,10 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-/* a */
-a {
-	color: #666;
+a,
+a:visited {
 	text-decoration: none;
-}
-a:hover {
 	color: #333;
-	text-decoration: underline;
 }
 /*clearfix*/
 .clearfix:before, .clearfix:after {
@@ -57,6 +53,7 @@ a:hover {
 .clearfix:after{
 	clear:both;
 }
+
 /*float*/
 .fl {
 	float: left;
@@ -64,31 +61,7 @@ a:hover {
 .fr {
 	float: right;
 }
-/*margin*/
-.mb10 {
-	margin-bottom: 10px;
-}
-.mb20 {
-	margin-bottom: 20px;
-}
-.mb30 {
-	margin-bottom: 30px;
-}
-.mb40 {
-	margin-bottom: 40px;
-}
-.mt10 {
-	margin-top: 10px;
-}
-.mt20 {
-	margin-top: 20px;
-}
-.mt30 {
-	margin-top: 30px;
-}
-.mt40 {
-	margin-top: 40px;
-}
+
 /* widget */
 i[class^=icon-] {
 	display: inline-block;
@@ -96,6 +69,7 @@ i[class^=icon-] {
 	line-height: 0;
 	vertical-align: middle;
 }
+
 /* other */
 .img-box {
 	text-align: center;

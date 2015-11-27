@@ -1,13 +1,14 @@
 @charset 'utf-8';
 /* RESET */
 html {
-	font-size: 18px;
+	font-size: 20px;
 }
 body {
-	font-size: .77rem;
+	font-size: .7rem;
 	background-color: #f8f8f8;
 }
-@media only screen and (max-width: 440px) {
+/*device compatibility*/
+/*@media only screen and (max-width: 440px) {
 	html {
 		font-size: 20px;
 	}
@@ -21,4 +22,5 @@ body {
 	html {
 		font-size: 17px;
 	}
-}
+}*/
+

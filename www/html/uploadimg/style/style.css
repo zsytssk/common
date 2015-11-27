@@ -1,0 +1,94 @@
+@charset 'utf-8';
+/* RESET */
+html {
+	font-size: 20px;
+}
+body {
+	font-size: .7rem;
+	background-color: #f8f8f8;
+}
+.uploadimg-box {
+	text-align: center;
+}
+.uploadimg-box li {
+	display: inline-block;
+	width: 8rem;
+	height: 8rem;
+	border: 1px solid #ddd;
+	position: relative;
+	vertical-align: top;
+	overflow: hidden;
+	margin: .6rem;
+}
+.uploadimg-box li .bg {
+	width: 3.7rem;
+	height: 5.6rem;
+	-webkit-background-size: contain;
+	background-size: contain;
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	background-image: url(images/bguploadimg.png);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -2.8rem 0 0 -1.6rem;
+	cursor: pointer;
+}
+.uploadimg-box li input {
+	opacity: 0;
+}
+.uploadimg-box li img {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+.uploadimg-box li .progress {
+	position: absolute;
+	height: 1rem;
+	width: 80%;
+	top: 50%;
+	margin-top: -.5rem;
+	left: 10%;
+	display: none;
+	text-align: center;
+	font-size: 1rem;
+	font-weight: bold;
+}
+.uploadimg-box li .progress span {
+	color: #1f9de5;
+}
+.uploadimg-box li .delete {
+	background-color: rgba(0, 0, 0, .7);
+	text-align: center;
+	bottom: 0;
+	height: 40px;
+	line-height: 40px;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	cursor: pointer;
+	display: none;
+}
+.icon-delete {
+	display: inline-block;
+	vertical-align: middle;
+	-webkit-background-size: contain;
+	background-size: contain;
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	width: 1.0rem;
+	height: 1.0rem;
+	margin-top: .5rem;
+	background-image: url(images/icon-delete.png);
+}
+.uploadimg-box li.uploading .bg,
+.uploadimg-box li.uploaded .bg {
+	display: none;
+}
+.uploadimg-box li.uploading .progress,
+.uploadimg-box li.uploaded .delete,
+.uploadimg-box li.uploaded img {
+	display: block;
+}
