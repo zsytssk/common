@@ -14,7 +14,7 @@ $(document).ready(function() {
 	// ie6
 	if($("html").is(".ie6")) {
 		$('<em style="zoom: 1;"></em>').insertBefore('img');
-		DD_belatedPNG.fix('')
+		DD_belatedPNG.fix('');
 		$("").addClass('inp');
 	}
 });

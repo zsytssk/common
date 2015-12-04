@@ -23,10 +23,9 @@ $(document).ready(function() {
 	}).blur(function() {
 		if ($(this).val() !== '') return;
 		$(this).siblings('.placeholder').show();
-	})
+	});
 
 	$(document).on('click', '.placeholder', function() {
 		$(this).prev('[placeholder]').focus();
 	});
 });
-
