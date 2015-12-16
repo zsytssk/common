@@ -43,13 +43,6 @@ f12::
 	send {Enter}
 	return
 
-; 调出sublime project 切换
-#IfWinExist, ahk_class PX_WINDOW_CLASS
-^!p::
-	activew("ahk_class PX_WINDOW_CLASS")
-	Send ^!p
-	return
-
 ; 调试html, 跳转chrome 刷新 再回到sublime
 #IfWinExist, .*job.* Sublime Text
 !1::
