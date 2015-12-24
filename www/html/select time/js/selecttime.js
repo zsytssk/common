@@ -1,5 +1,6 @@
 // 用top代替scrollTop
 // 最后可以用 css animate 实现平滑滚动
+// 自定义时间 天数 小时 分钟
 
 NodeList.prototype.forEach = Array.prototype.forEach;
 
