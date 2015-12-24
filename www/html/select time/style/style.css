@@ -1,0 +1,184 @@
+@charset 'utf-8';
+/*pop*/
+html {
+	font-size: 20px;
+}
+body {
+	font-size: .72rem;
+	background-color: #efeff4;
+}
+h3 {
+	font-size: 1rem;
+}
+a[class^=btn],
+a[class^=btn] {
+	box-sizing: border-box;
+	display: inline-block;
+	text-align: center;
+	border-radius: .3rem;
+}
+a[class^=btn],
+button[class^=btn] {
+	cursor: pointer;
+	outline: none;
+	font-family: 'Microsoft yahei';
+}
+.btn1 {
+	background-color: #fe9e38;
+	color: #fff !important;
+	border: none;
+}
+.btn1:hover {
+	color: #fff;
+	background-color: #fe9e38;
+}
+.btn1:active {
+	color: #333 !important;
+	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.4);
+}
+.btn2 {
+	background-color: transparent;
+	border: 1px solid #858585;
+	color: #000;
+}
+.pop-common .close:after {
+	-webkit-background-size: contain;
+	background-size: contain;
+	background-position: 0 0;
+	background-repeat: no-repeat;
+}
+.pop-overlay {
+	background-color: rgba(0, 0, 0, 0.3);
+	display: none;
+	height: 100%;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 999;
+}
+.pop {
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	display: none;
+	left: 50%;
+	position: fixed;
+	top: 50%;
+	z-index: 999;
+	overflow: hidden;
+	transform: translateX(-50%) translateY(-50%);
+}
+.pop .close {
+	cursor: pointer;
+	position: absolute;
+}
+/*pop-*/
+.pop-common {
+	width: 15.8rem;
+	padding: 0.7rem 0;
+	background-color: #efeff4;
+}
+.pop-common h3 {
+	text-align: center;
+	padding: 0 0.7rem;
+	height: 1.4rem;
+	line-height: 1.4rem;
+}
+.pop-common .close {
+	width: 2rem;
+	height: 2rem;
+	right: 0;
+	top: 0;
+}
+.pop-common .close:after {
+	position: absolute;
+	content: '';
+	right: .5rem;
+	top: .5rem;
+	width: 1rem;
+	height: 1rem;
+	background-image: url(images/icon-close.png);
+}
+.pop-common .close:active:after {
+	background-image: url(images/icon-close-active.png);
+}
+.pop-common .pop-con {
+	padding: 0.8rem 0.9rem;
+}
+.pop-common footer .btn-box a {
+	width: 4.3rem;
+	height: 1.4rem;
+	line-height: 1.4rem;
+}
+/*pop-selecttime*/
+@charset 'utf-8';
+.pop-selecttime {
+	background-color: #fff;
+}
+.pop-selectadress .pop-con,
+.pop-selecttime .pop-con {
+	padding-bottom: 0.2rem;
+}
+.pop-selecttime [class^=btn] {
+	height: 1.4rem;
+	line-height: 1.4rem;
+}
+.pop-selecttime .st-box {
+	padding: 0.5rem;
+	margin-top: -1rem;
+}
+.pop-selecttime .st-list {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+}
+.pop-selecttime .st-list .st-item {
+	flex: 1;
+	height: 7.2rem;
+	overflow: hidden;
+	position: relative;
+	margin: 0 0.3rem;
+}
+.pop-selecttime .st-list .overlay {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: transparent;
+}
+.pop-selecttime .st-list .overlay:before,
+.pop-selecttime .st-list .overlay:after {
+	width: 100%;
+	background-color: rgba(255, 255, 255, .7);
+	content: '';
+	position: absolute;
+	height: 33%;
+	left: 0;
+	z-index: 10;
+}
+.pop-selecttime .st-list .overlay:before {
+	top: 0;
+	border-bottom: 0.1rem solid #fe9e38;
+}
+.pop-selecttime .st-list .overlay:after {
+	bottom: 0;
+	border-top: 0.1rem solid #fe9e38;
+}
+.pop-selecttime .st-list .st-item .inner {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+.pop-selecttime .st-list .st-item .inner ul {
+	padding: 2.4rem 0;
+	position: relative;
+	top: 0;
+}
+.pop-selecttime .st-list .st-item li {
+	text-align: center;
+	height: 2.4rem;
+	line-height: 2.4rem;
+	font-size: .8rem;
+	color: #000;
+}

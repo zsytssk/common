@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+	<link rel="stylesheet" href="style/base.css" media="all" />
+	<link rel="stylesheet" href="style/style.css" media="all" />
+	<!-- <link rel="stylesheet" href="style/test.css" media="all" /> -->
+	<script src="js/selecttime.js" async></script>
+</head>
+
+<body>
+	<section class="pop-overlay" style="display: block;">
+		<div class="pop pop-common pop-selecttime" id="pop-selecttime" style="display: block;">
+			<h3>
+				选择时间
+				<a class="close"></a>
+			</h3>
+			<div class="pop-con">
+				<div class="st-box">
+					<input type="hidden" id="date" value>
+					<input type="hidden" id="hour" value>
+					<input type="hidden" id="date" value>
+					<div class="st-list">
+						<div class="st-item st-date" data-target="date">
+							<div class="overlay"></div>
+							<div class="inner">
+								<ul>
+									<li data-val="2015/12/22">今天</li>
+									<li class="cur" data-val="2015/12/23">明天</li>
+									<li data-val="2015/12/24">后天</li>
+								</ul>
+							</div>
+						</div>
+						<div class="st-item st-hour" data-target="hour">
+							<div class="overlay"></div>
+							<div class="inner">
+								<ul>
+									<li data-val="08">08</li>
+									<li data-val="08">09</li>
+									<li data-val="08">10</li>
+									<li data-val="01">11</li>
+									<li data-val="02">12</li>
+									<li data-val="03">13</li>
+									<li data-val="04">14</li>
+									<li data-val="05">15</li>
+									<li data-val="06">16</li>
+									<li data-val="07">17</li>
+									<li data-val="08">18</li>
+									<li data-val="08">19</li>
+									<li data-val="08">20</li>
+								</ul>
+							</div>
+						</div>
+						<div class="st-item st-minite" data-target="minite">
+							<div class="overlay"></div>
+							<div class="inner">
+								<ul>
+									<li>00</li>
+									<li class="cur">15</li>
+									<li>30</li>
+									<li>45</li>
+									<li>60</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<footer>
+					<div class="btn-box">
+						<a class="btn2 fl">取消</a>
+						<a class="btn1 fr">确定</a>
+					</div>
+				</footer>
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>
