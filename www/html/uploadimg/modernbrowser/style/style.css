@@ -1,0 +1,99 @@
+@charset 'utf-8';
+/* RESET */
+html {
+	font-size: 20px;
+}
+body {
+	font-size: .7rem;
+	background-color: #f8f8f8;
+}
+.uploadimg-box ul {
+	overflow: hidden;
+}
+.uploadimg-box li {
+	float: left;
+	border: 1px solid #ddd;
+	position: relative;
+	width: 210px;
+	height: 210px;
+	overflow: hidden;
+	margin-right: 30px;
+}
+.uploadimg-box li .bg {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-size: 15px;
+	display: table;
+	text-align: center;
+	cursor: pointer;
+	background-color: #fff;
+}
+.uploadimg-box li .bg .inner {
+	display: table-cell;
+	vertical-align: middle;
+}
+.uploadimg-box li .bg i {
+	width: 120px;
+	height: 120px;
+	margin-bottom: 15px;
+	display: inline-block;
+	background: #fff url('images/bguploadimg.png') 0 0 no-repeat;
+	margin-right: 0;
+}
+.uploadimg-box li .bg .txt {
+	width: 90%;
+	margin: auto;
+}
+.uploadimg-box li .bg i {
+	vertical-align: text-bottom;
+	margin-right: 3px;
+}
+.uploadimg-box li input[type='file'] {
+	position: absolute;
+	left: -999px;
+}
+.uploadimg-box li .uploadimg {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+.uploadimg-box li .progress {
+	position: absolute;
+	height: 15px;
+	width: 80%;
+	top: 50%;
+	margin-top: -8px;
+	left: 10%;
+	text-align: center;
+	display: none;
+}
+.uploadimg-box li .progress span {
+	color: #1f9de5;
+}
+.uploadimg-box li .delete {
+	background-color: rgba(0, 0, 0, .7);
+	text-align: center;
+	bottom: 0;
+	height: 40px;
+	line-height: 40px;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	cursor: pointer;
+	display: none;
+	background: rgba(0, 0, 0, .7) url(images/icon-delete.png) center center no-repeat;
+}
+.uploadimg-box li.uploading .bg,
+.uploadimg-box li.uploaded .bg {
+	display: none;
+}
+.uploadimg-box li.uploading .progress,
+.uploadimg-box li.uploaded .delete,
+.uploadimg-box li.uploaded .uploadimg {
+	display: block;
+}

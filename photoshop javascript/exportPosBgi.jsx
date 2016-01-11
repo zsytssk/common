@@ -1,6 +1,6 @@
-﻿// @target photoshop
+﻿// #target photoshop
 
-// @include "libs/saveImages.jsx"
+#include "libs/saveImages.jsx";
 
 function main() {
 	if($.os.search(/windows/i) !== -1) {
@@ -75,7 +75,8 @@ function getBackgroundImage(el, path, name, lname) {
 	dupLayers();
 	var saveFile = File(path + name);
 	// SavePNG(saveFile);
-	SavePNG(saveFile);
+	// SavePNG8(saveFile);
+	SaveGIF(saveFile);
 	app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);
 }
 
