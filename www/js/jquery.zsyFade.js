@@ -123,3 +123,44 @@
 		});
 	};
 }(jQuery));
+// .index - glr {
+// 	position: relative;
+// 	border-top: 3px solid #fff;
+// }
+// .index-glr .glr-wraper {
+// 	height: 650px;
+// }
+// .index-glr .glr-wraper li {
+// 	height: 650px;
+// 	background-color: transparent;
+// 	background-position: center 0;
+// 	background-repeat: no-repeat;
+// 	position: absolute;
+// 	top: 0;
+// 	left: 0;
+// 	width: 100%;
+// 	display: none;
+// }
+// .index-glr .glr-wraper li.cur {
+// 	display: block;
+// }
+// .index-glr .pagination {
+// 	position: absolute;
+// 	bottom: 10px;
+// 	left: 0;
+// 	width: 100%;
+// 	text-align: center;
+// 	z-index: 100;
+// }
+// .index-glr .pagination a {
+// 	display: inline-block;
+// 	width: 10px;
+// 	height: 10px;
+// 	background-color: #fff;
+// 	margin-right: 10px;
+// 	cursor: pointer;
+// 	border-radius: 10px;
+// }
+// .index-glr .pagination .cur {
+// 	background-color: #444;
+// }

@@ -1,62 +1,6 @@
-/*--- ie6 ie7 已经退出了历史舞台 ---*/
-em {
-	font-style: normal;
-}
-/* icon */
-*html .icon-close,
-*html .icon-caret-down,
-*html .icon-caret-left,
-*html .icon-caret-right,
-*html .icon-caret-up {
-	display: inline;
-	font-size: 0;
-	line-height: 0;
-	zoom: 1;
-}
-*html .icon-caret-down,
-*html .icon-caret-left,
-*html .icon-caret-right,
-*html .icon-caret-up {
-	border-style: solid;
-	height: 0;
-	width: 0;
-	zoom: 1;
-}
-/* IE6 hver */
-
-/* radius */
-/* opacity */
-/*rgba */
-/* PNG */
-/* float */
-*html .fl,
-*html .fr {
-	display: inline;
-}
-
-*html .pos-r,
-.clearfix {
-	*zoom: 1;
-}
-
-/*1* inline block */
-.d-ib {
-	*display: inline;
-	*zoom: 1;
-}
-
-/* opacity */
-
 /* rgba */
-.Index .floor.idea li:hover .txt {
-	background: transparent url(images/rgba1.png) 0 0 repeat;
-}
-.AboutUs .Header,
-.Idea .Header {
-	background: transparent url(images/rgba2.png) 0 0 repeat;
-}
 .pop-overlay {
-	background: transparent url(images/rgba3.png) 0 0 repeat;
+	background: transparent url(images/rgba1.png) 0 0 repeat;
 }
 /* size */
 
