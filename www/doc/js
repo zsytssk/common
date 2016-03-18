@@ -1,0 +1,123 @@
+// mobile 使用 touchend， 桌面要 click 
+var click = ('ontouchstart' in window) ? 'touchend' : 'click';
+
+// tab 切换 
+$(document).on('click', '.tabs-box .trigger a', function(event) {
+    var $tabItems = $(this).parents('.tabs-box').find('.tab-item');
+    $(this).addClass('cur').siblings('.cur').removeClass('cur');
+    $tabItems.eq($(this).index()).addClass('cur').siblings('.cur').removeClass('cur');
+});
+$(document).on('click', '[data-toggle=tab]', function(event) {
+    var $tabTaget = $($(this).data('target'));
+    var index = $tabTaget.index();
+    $tabTaget.parents('.tabs-box').find('.trigger a').eq(index).addClass('cur').siblings().removeClass('cur');
+    $tabTaget.addClass('cur').siblings().removeClass('cur');
+});
+
+// alertTip 
+function alertTip(type, txt, callback) {
+    if (type === 'error') {
+        $('.pop-tip .icon-box i').addClass('icon-err');
+    } else {
+        $('.pop-tip .icon-box i').removeClass('icon-err');
+    }
+
+    $('.pop-tip .txt span').html(txt);
+    $('.pop-overlay, .pop-tip').show();
+
+    $('.pop-tip .confirm').one('click', function(event) {
+        $(this).parents('.pop-tip').find('.close').click();
+        if (callback) {
+            callback();
+        }
+    });
+}
+
+
+$(document).on('mouseenter mouseleave', '.selector', function(event) {
+    if (event.type == 'mouseenter') {
+
+    } else {
+
+    }
+});
+
+
+function runJsCode(n) {
+    // 弹出窗口 运行代码 
+    var i = document.getElementById(n),
+        t = window.open("about:blank", "runWindow");
+    t.opener = null;
+    t.document.open();
+    t.document.write(i.value);
+    t.document.close()
+}
+
+// 回到顶部 
+$('.gotoTop').click(function(event) {
+    event.preventDefault();
+    $('body, html').animate({
+        scrollTop: 0
+    }, 300);
+});
+
+$(window).scroll(function(event) {
+    if ($(this).scrollTop() > 300 && $('.gotoTop').is(':hidden')) {
+        $('.gotoTop').show();
+    } else if ($(this).scrollTop() < 300 && $('.gotoTop').is(':visible')) {
+        $('.gotoTop').hide();
+    }
+});
+
+// pop 
+$(document).on('click', '.pop-overlay', function(event) {
+    if (!$(event.target).closest('.pop').length || $(event.target).closest('.pop .close').length || $(event.target).closest('.pop .cancel').length) {
+        $(this).add($(this).find('.pop')).hide();
+    }
+});
+$(document).on('click', '[data-toggle=pop]', function(event) {
+    var target = $('#' + $(this).data('target'));
+    console.log(target);
+    target.add(target.parent()).show();
+});
+
+// panel 
+$(document).on('click', '[data-toggle=panel]', function(event) {
+    event.preventDefault();
+    var target = $('#' + $(this).data('target'));
+
+    target.add(target.parent()).show();
+});
+
+
+jQuery(element).mousedown(function(e) {
+    e.preventDefault();
+})
+
+
+$('.count-wrap a').click(function(event) {
+    $text = $(this).siblings('.text');
+    t_value = parseInt($text.val())
+    if ($(this).is('.count-reduce')) {
+        if (t_value == 0) {
+            return
+        }
+        $text.val(t_value - 1)
+    } else {
+        $text.val(t_value + 1)
+    }
+});
+
+
+function zhlen(s) {
+    var ret = 0;
+    for (var i = 0; i < s.length; i++) {
+        iCode = s.charCodeAt(i);
+        if ((iCode >= 0 && iCode <= 255) || (iCode >= 0xff61 && iCode <= 0xff9f)) {
+            ret += 1;
+        } else {
+            ret += 2;
+        }
+    };
+    return ret
+}
