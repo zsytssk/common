@@ -36,7 +36,7 @@
         }
         if (index == length - 1) {
           // complete all validate exec
-          if (cfg.submitFunc && type(cfg.submitFunc) == 'function') {
+          if (cfg.submitFunc && typeof (cfg.submitFunc) == 'function') {
             cfg.submitFunc();
           } else {
             $this.submit();
