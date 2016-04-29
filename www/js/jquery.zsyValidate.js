@@ -1,4 +1,3 @@
-// html5 invalid can't disalbe append element
 ;
 (function ($) {
   $.fn.zsyValidate = function (options) {
