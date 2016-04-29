@@ -12,6 +12,20 @@
 }  
 
 # jquery.zsyValidate.js  
+-| 清除原先的绑定 更新新的绑定  
+-> 在当前的 this 有input textarea blur focus update valite_ele  
+-> 在submit_btn点击的时候执行更新  
+-> 关键什么时候更新 input blur 如果这个input不在 $input 中 当前中  
+-> 那么 submit_btn 点击的时候呢  
+---&&---  
+-? 能不能判断两个jqery对象  
+-> 两者的length 如果不一样return false  
+-> length 一样 比较里面的每一个对象 如果有一个不一样  
+-> 这个插件能不能把验证off掉 再 on  
+---&&---  
+我直接使用 $input.selector 绑定事件 也就是每一次他都会自己去找 ele  
+问题就没有了  
+
 -| 适用: input(text, password, checkbox, radio) select  
 
 -| demo  
