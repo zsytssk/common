@@ -1,3 +1,4 @@
+// html5 invalid can't disalbe append element
 ;
 (function ($) {
   $.fn.zsyValidate = function (options) {
@@ -6,6 +7,7 @@
       valite_ele: '', //need valite element
       tipFunc: function () {},
       disableBrowserDefaultValidate: true,
+      disableBrowserDefaultSubmit: true,
       submitFunc: ''
     };
 
@@ -13,21 +15,21 @@
     var $this = $(this);
     var $submit_btn = $(cfg.submit_btn);
     var input = cfg.valite_ele;
-    var input_length = $this.find(input).length;
     // handle browser default valid behavior
     if (hasFormValidation()) {
       if (cfg.disableBrowserDefaultValidate) {
         // disable
-        disabledH5Validate();
+        $this.find('input, select, textarea').on('invalid', function (event) {
+          event.preventDefault();
+          return false;
+        });
       } else {
         return false;
       }
     }
 
     $submit_btn.click(function () {
-      if (length != $this.find(input).length) {
-        // 如果元素该
-      }
+      var length = $this.find(input).length;
       $this.find(input).each(function (index, ele) {
         var cur_validate = validate(this);
         if (!cur_validate) {
@@ -50,7 +52,7 @@
 
     function validate(obj) {
       if (obj.tagName === 'SELECT') {
-        if (obj.selectedIndex === 0) {
+        if (obj.selectedIndex === 0 && obj.value === '请选择') {
           cfg.tipFunc('invalid', 'empty', obj);
           return false;
         }
@@ -81,13 +83,5 @@
     function hasFormValidation() {
       return (typeof document.createElement('input').checkValidity == 'function');
     };
-
-    function disabledH5Validate() {
-      $this.find('input, select, textarea').on('invalid', function (event) {
-        event.preventDefault();
-        return false;
-      });
-    }
-
   };
-}(jQuery));
+}(jQuery || Zepto));
