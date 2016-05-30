@@ -1,0 +1,85 @@
+/* after 不用 pos */
+.bg_contain {
+  background-size: contain;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+.bg_contain-d_ib {
+  @extend .bg_contain;
+  display: inline-block;
+  vertical-align: middle;
+}
+.fix_vam {
+  margin-top: -.04rem;
+}
+.pseudo-box:after {
+  content: '';
+}
+.icon-posa-pseudo-box {
+  position: relative;
+}
+.icon-posa-pseudo-box:after {
+  position: absolute;
+  @extend .pseudo-box:after;
+  @extend .bg_contain;
+}
+.icon-ib-pseudo-box:after {
+  @extend .pseudo-box:after;
+  @extend .bg_contain-d_ib;
+}
+/* --- */
+.arrow-yellow-right {
+  @extend .icon-posa-pseudo-box;
+}
+.arrow-yellow-right:after {
+  background-image: url(../../../dist/images/arrow-right-yellow.png);
+  height: 0.3rem;
+  width: 0.16rem;
+}
+/* active hightlight */
+.fz12 {
+  font-size: .24rem;
+  @media (min-width: 360px) {
+    font-size: .22rem;
+  }
+  @media (min-width: 400px) {
+    font-size: .2rem;
+  }
+}
+.fz14 {
+  font-size: .28rem;
+  @media (min-width: 360px) {
+    font-size: .26rem;
+  }
+  @media (min-width: 400px) {
+    font-size: .25rem;
+  }
+}
+.fz16 {
+  font-size: .32rem;
+  @media (min-width: 360px) {
+    font-size: .28rem;
+  }
+  @media (min-width: 400px) {
+    font-size: .26rem;
+  }
+}
+.fz18 {
+  font-size: .36rem;
+  @media (min-width: 360px) {
+    font-size: .32rem;
+  }
+  @media (min-width: 400px) {
+    font-size: .30rem;
+  }
+}
+.fz20 {
+  font-size: .4rem;
+  @media (min-width: 360px) {
+    font-size: .361rem;
+  }
+  @media (min-width: 400px) {
+    font-size: .32rem;
+  }
+}
