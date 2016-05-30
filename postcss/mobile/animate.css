@@ -1,0 +1,37 @@
+/* 如何让他隐藏的时候 animate 相反的效果 */
+.animate-bounceIn {
+  animation-duration: .4s;
+  animation-name: bounceIn;
+}
+@-webkit-keyframes bounceIn {
+  0% {
+    transform: scaleX(1);
+  }
+  33% {
+    transform: scale3d(1.03,1.03,1.03);
+  }
+  66% {
+    transform: scale3d(.97,.97,.97);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.animate-fadeIn {
+  animation-duration: .5s;
+  animation-name: b;
+}
+@-webkit-keyframes b {
+  0% {
+    transform: scale(.1);
+    opacity: .1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.animate-slideDown {
+  animation-duration: .5s;
+  animation-name: b;
+}
