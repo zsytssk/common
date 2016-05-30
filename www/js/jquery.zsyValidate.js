@@ -8,6 +8,7 @@
       tipFunc: function () {},
       disableBrowserDefaultValidate: true,
       disableBrowserDefaultSubmit: true,
+      selectPlaceholder: '请选择', // select 一般需要一个提示占位符, 在这里填上
       submitFunc: ''
     };
 
@@ -45,14 +46,21 @@
         }
       });
     });
+    bindInputEvent();
 
-    $this.on('blur', input, function () {
+    // 绑定事件
+    function bindInputEvent() {
+      $input.off('blur', bindBlur);
+      $input.on('blur', bindBlur);
+    }
+    // inp blur event
+    function bindBlur() {
       validate(this);
-    });
+    }
 
     function validate(obj) {
       if (obj.tagName === 'SELECT') {
-        if (obj.selectedIndex === 0 && obj.value === '请选择') {
+        if (obj.selectedIndex === 0 && obj.value === cfg.selectPlaceholder) {
           cfg.tipFunc('invalid', 'empty', obj);
           return false;
         }
@@ -83,5 +91,13 @@
     function hasFormValidation() {
       return (typeof document.createElement('input').checkValidity == 'function');
     };
+
+    this.updateInp = function () {
+      // 如果页面的input发生改变 比方说新添加input... 需要使用这个函数更新下$input
+      // 和相应的事件绑定
+      $input = $this.find(cfg.valite_ele);
+      bindInputEvent();
+    }
+    return this;
   };
 }(jQuery || Zepto));
