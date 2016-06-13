@@ -31,7 +31,3 @@
     opacity: 1;
   }
 }
-.animate-slideDown {
-  animation-duration: .5s;
-  animation-name: b;
-}
