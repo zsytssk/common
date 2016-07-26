@@ -1,3 +1,7 @@
+## zu.js  
+尝试自己写一个类似zepto的js  
+
+
 # placeholder.js  
 -| 原理 有placeholder这个属性的后面再加上一个label,  
 -> 再把label设置为与input 同宽 margin-left定位到input里面  
