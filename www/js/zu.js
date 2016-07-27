@@ -7,13 +7,13 @@ zu.$ = function (selector) {
     if (!ele) {
       return false
     }
-    return 'click' in ele;
+    return 'onclick' in ele;
   }
 
-  analysisSelector = function (selector) {
+  $ = function (selector) {
     var zdoms;
     if (typeof selector === 'string') {
-      // 瀛楃涓查€夋嫨鍣�
+      // selector
       var doms = document.querySelectorAll(selector);
       zdoms = new Z(doms, selector);
     } else if (isDom(selector)) {
@@ -29,6 +29,42 @@ zu.$ = function (selector) {
     return zdoms;
   };
 
+  function createZapEvent() {
+    // create zap event zap == tap
+    $('body')[0].dataset.createtap = 'on';
+    $(document).on('touchstart', function (event) {
+      event.target.dataset.zsytouchstatus = 'start';
+    });
+    $(document).on('touchmove', function (event) {
+      if (event.target.dataset.zsytouchstatus == 'start') {
+        event.target.dataset.zsytouchstatus = 'move';
+      }
+    });
+    $(document).on('touchend', function (event) {
+      var zsytouchstatus;
+      if (event.target.dataset && event.target.dataset.zsytouchstatus) {
+        zsytouchstatus = event.target.dataset.zsytouchstatus;
+        event.target.removeAttribute('data-zsytouchstatus');
+      }
+      if (zsytouchstatus != 'start') {
+        return true;
+      }
+      $(event.target).trigger('zap');
+    });
+  }
+
+  function eventPopup(origindom, dom, eventName) {
+    // 用于事件冒泡
+    var evt = new CustomEvent(eventName, {
+      detail: origindom
+    });
+    dom.dispatchEvent(evt);
+    if (dom.parentNode) {
+      return eventPopup(origindom, dom.parentNode, eventName);
+    }
+    return false
+  }
+
   function Z(dom, selector) {
     var i, len = dom ? dom.length : 0;
     for (i = 0; i < len; i++) {
@@ -39,17 +75,18 @@ zu.$ = function (selector) {
   }
   Z.prototype = Array.prototype;
   Z.prototype.eq = function (index) {
-    // 杩斿洖绗嚑涓厓绱�
-    var $this = this;
-    return new Z([$this[index]]);
+    // zepto eq
+    var $self = this;
+    return $($self[index]);
   };
-  Z.prototype.find = function (index) {
-    // 杩斿洖绗嚑涓厓绱�
-    var $this = this;
-    return new Z([$this[index]]);
+  Z.prototype.find = function (selector) {
+    // zepto find
+    var $self = this;
+    var doms = $self[0].querySelectorAll(selector);
+    return new Z(doms, '');
   };
   Z.prototype.reduce = function () {
-    // 闄ゅ幓閲嶅鐨勫厓绱�
+    // delete dulplicate dom
     var self = this;
     var _slef = new Z('', self.selector);
     if (!self.length) {
@@ -78,26 +115,16 @@ zu.$ = function (selector) {
     }
     return false;
   }
-  Z.prototype.addClass = function (cla) {
-    var $this = this;
-    if (!this.length) {
-      return this;
-    }
-    $this.forEach(function (ele) {
-      ele.classList.add(cla);
-    });
-    return this;
-  };
 
   Z.prototype.closest = function (selector) {
-    var $this = this;
-    var len_this = $this.length;
-    var zdoms = analysisSelector(selector);
+    var $self = this;
+    var len_this = $self.length;
+    var zdoms = $(selector);
     for (var i = 0; i < zdoms.length; i++) {
       var dom = zdoms[i];
-      for (var j = 0, len = $this.length; j < len; j++) {
-        if (isClosest($this[j], dom)) {
-          return analysisSelector(dom);
+      for (var j = 0, len = $self.length; j < len; j++) {
+        if (isClosest($self[j], dom)) {
+          return $(dom);
         }
       }
     }
@@ -114,51 +141,57 @@ zu.$ = function (selector) {
         return isClosest(son.parentNode, parent);
       }
     }
-    return $this;
+    return $self;
   };
 
   Z.prototype.addClass = function (cla) {
-    var $this = this;
+    var $self = this;
     if (!this.length) {
       return this;
     }
-    $this.forEach(function (ele) {
+    $self.forEach(function (ele) {
       ele.classList.add(cla);
     });
     return this;
   };
 
   Z.prototype.removeClass = function (cla) {
-    var $this = this;
+    var $self = this;
     if (!this.length) {
       return this;
     }
-    $this.forEach(function (ele) {
+    $self.forEach(function (ele) {
       ele.classList.remove(cla);
     });
     return this;
   };
   Z.prototype.on = function (event, selector, callback) {
-    var $this = this;
+    var $self = this;
     if (!this.length) {
       return this;
     }
+    if (event == 'zap') {
+      if ($('body')[0].dataset.createtap !== 'on') {
+        createZapEvent();
+      }
+    }
     if (typeof (selector) === 'function') {
       callback = selector;
-      $this.forEach(function (ele) {
+      $self.forEach(function (ele) {
         ele.addEventListener(event, callback);
       });
     } else {
-      $this.forEach(function (ele) {
+      $self.forEach(function (ele) {
         ele.addEventListener(event, function (e) {
           var doms = [];
-          for (var i = 0, len = $this.length; i < len; i++) {
-            var domsItem = $this[i].querySelectorAll(selector);
-            for (var j = 0, item_len = domsItem.length; j < item_len; j++) {
-              doms.push(domsItem[j]);
-            }
+          var domsItem = ele.querySelectorAll(selector);
+          for (var j = 0, item_len = domsItem.length; j < item_len; j++) {
+            doms.push(domsItem[j]);
           }
-          var closetDom = _self.$(e.target).closest(doms);
+          var closetDom = $(e.target).closest(doms);
+          if (isDom(e.detail)) {
+            var closetDom = $(e.detail).closest(doms);
+          }
           if (closetDom) {
             callback.call(closetDom[0], e);
           }
@@ -167,8 +200,17 @@ zu.$ = function (selector) {
     }
     return this;
   };
+  Z.prototype.trigger = function (eventName) {
+    var $self = this;
+    for (var i = 0; i < $self.length; i++) {
+      var Ditem = $self[i];
+      eventPopup(Ditem, Ditem, eventName);
+    }
+    return $self;
+  }
+
   window.Z = Z;
-  return analysisSelector(selector);
+  return $(selector);
 }
 zu.getEleStyle = function (ele, porperty) {
   // 获得元素的css属性

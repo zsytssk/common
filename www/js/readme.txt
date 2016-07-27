@@ -1,5 +1,20 @@
 ## zu.js  
 尝试自己写一个类似zepto的js  
+api  
+-> on  
+-> find  
+-> eq  
+-> find  
+-> addClass  
+-> closest  
+-> removeClass  
+-> on  
+-> trigger  
+
+-? 触发的的事件无法冒泡  
+-> 自定义事件无法触发 on(event, selector, callback)  
+-> 因为在on中作的是event.target 在不在selector下面  
+-> 我现在暂时放在 event 的detail上面, 在on里面判断 event detail  
 
 
 # placeholder.js  
