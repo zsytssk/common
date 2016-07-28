@@ -1,4 +1,10 @@
 // zsytssk utility 常用工具集合
+
+// trigger event
+
+// 自定义事件无法触发 on(event, selector, callback) 因为在on中作的是event.target 在不在selector下面
+// 现在触发的的事件无法冒泡, 也许我只能自定义事件了 所有的传递的都是自定义事件
+// 我现在暂时放在 event 的detail上面
 var zu = {};
 zu.$ = function (selector) {
   var _self = this;
@@ -22,10 +28,17 @@ zu.$ = function (selector) {
     } else if (selector instanceof Z) {
       // z dom
       zdoms = selector;
-    } else if (selector.length && isDom(selector[0])) {
-      zdoms = new Z(zdoms = new Z([selector]));
-      return false;
+    } else if (selector instanceof NodeList) {
+      // 数组元素
+      zdoms = new Z(selector);
+    } else if (selector.length) {
+      // 数组元素
+      zdoms = new Z(selector);
     }
+    zdoms = zdoms.filter(function (index, item) {
+      // 除去不是text + comment节点
+      return isDom(item);
+    });
     return zdoms;
   };
 
@@ -73,7 +86,7 @@ zu.$ = function (selector) {
     this.length = len;
     this.selector = selector || '';
   }
-  Z.prototype = Array.prototype;
+  Z.prototype = new Array;
   Z.prototype.eq = function (index) {
     // zepto eq
     var $self = this;
@@ -83,37 +96,79 @@ zu.$ = function (selector) {
     // zepto find
     var $self = this;
     var doms = $self[0].querySelectorAll(selector);
-    return new Z(doms, '');
+    return new Z(doms);
   };
-  Z.prototype.reduce = function () {
-    // delete dulplicate dom
-    var self = this;
-    var _slef = new Z('', self.selector);
-    if (!self.length) {
-      return self;
+  Z.prototype.siblings = function (selector) {
+    // zepto find
+    var $self = this;
+    var zdoms = new Z([]);
+    for (var i = 0; i < $self.length; i++) {
+      zdoms = zdoms.add($($self[i].parentNode.childNodes));
     }
-    for (var i = 0; i < self.length; i++) {
-      if (!_slef.contains(self[i])) {
-        _slef[length] = self[i];
-        _slef.length += 1;
+    zdoms = zdoms.reduce();
+    if (selector) {
+      var zdomsSelector = $(selector);
+      var zdomsResult = new Z([]);
+      for (var i = 0; i < zdomsSelector.length; i++) {
+        if (zdoms.contains(zdomsSelector[i])) {
+          zdomsResult.push(zdomsSelector[i])
+        }
+      }
+      zdoms = zdomsResult.reduce();
+    }
+    return zdoms;
+  };
+  Z.prototype.filter = function (callback) {
+    // zepto find
+    var $self = this;
+    var doms = [];
+    for (var i = 0; i < $self.length; i++) {
+      if (callback(i, $self[i])) {
+        doms.push($self[i]);
       }
     }
-    self = _slef
-    return self;
+    return new Z(doms);
+  };
+  Z.prototype.add = function (zdoms) {
+    var $self = this;
+    zdoms = $(zdoms);
+    var a = Array.prototype.slice.call($self);
+    var b = Array.prototype.slice.call(zdoms);
+    return new Z(a.concat(b)).reduce();
+  }
+  Z.prototype.reduce = function () {
+    // delete dulplicate dom
+    var $self = this;
+    var zdoms = new Z([], self.selector);
+    if (!$self.length) {
+      return $self;
+    }
+    for (var i = 0; i < $self.length; i++) {
+      if (!zdoms.contains($self[i])) {
+        zdoms.push($self[i]);
+      }
+    }
+    $self = zdoms
+    return $self;
   };
   Z.prototype.contains = function (ele) {
-    // 鐩戞祴鏄惁鍖呭惈鍝釜鍏冪礌
-    var self = this;
+    // detect Zdoms contains a dom
+    var $self = this;
     if (!isDom(ele)) {
-      // 濡傛灉涓嶆槸dom鍏冪礌鐩存帴杩斿洖
       return false;
     }
-    for (var i = 0; i < self.length; i++) {
-      if (self[i] == ele) {
+    for (var i = 0; i < $self.length; i++) {
+      if ($self[i] == ele) {
         return true;
       }
     }
     return false;
+  }
+  Z.prototype.push = function (ele) {
+    // detect Zdoms contains a dom
+    var $self = this;
+    $self[$self.length] = ele;
+    $self.length += 1;
   }
 
   Z.prototype.closest = function (selector) {
@@ -132,7 +187,7 @@ zu.$ = function (selector) {
 
     function isClosest(son, parent) {
       if (!son) {
-        // 濡傛灉宸茬粡鍒拌揪document 杩斿洖false
+        // parent 是不是 son的父级元素
         return false
       }
       if (son == parent) {
