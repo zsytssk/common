@@ -1,6 +1,6 @@
 ## zu.js  
 尝试自己写一个类似zepto的js  
-api  
+-| api[complete]  
 -> on  
 -> find  
 -> eq  
@@ -10,6 +10,10 @@ api
 -> removeClass  
 -> on  
 -> trigger  
+-> add  
+-> siblings  
+-| api[todo]  
+-> index  
 
 -? 触发的的事件无法冒泡  
 -> 自定义事件无法触发 on(event, selector, callback)  
