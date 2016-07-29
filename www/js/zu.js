@@ -5,6 +5,7 @@
 // 自定义事件无法触发 on(event, selector, callback) 因为在on中作的是event.target 在不在selector下面
 // 现在触发的的事件无法冒泡, 也许我只能自定义事件了 所有的传递的都是自定义事件
 // 我现在暂时放在 event 的detail上面
+"use strict";
 var zu = {};
 zu.$ = function (selector) {
   var _self = this;

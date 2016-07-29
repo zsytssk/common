@@ -14,7 +14,10 @@
 -> siblings  
 -> index  
 -| api[todo]  
--?  
+-? css animate  
+-? customize event  
+-? 支持jquery 插件:>  
+-> 我有必要写这么复杂吗, 把这当着提高自己水平的娱乐  
 
 -? 触发的的事件无法冒泡  
 -> 自定义事件无法触发 on(event, selector, callback)  
