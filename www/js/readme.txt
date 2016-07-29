@@ -12,8 +12,9 @@
 -> trigger  
 -> add  
 -> siblings  
--| api[todo]  
 -> index  
+-| api[todo]  
+-?  
 
 -? 触发的的事件无法冒泡  
 -> 自定义事件无法触发 on(event, selector, callback)  

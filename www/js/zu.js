@@ -92,6 +92,28 @@ zu.$ = function (selector) {
     var $self = this;
     return $($self[index]);
   };
+  Z.prototype.index = function (selector) {
+    // zepto eq
+    var $self = this;
+    if (selector) {
+      // find item index in this list
+      var Zdoms = $(selector);
+      for (var i = 0; i < $self.length; i++) {
+        if ($self[i] == Zdoms[0]) {
+          return i;
+        }
+      }
+    } else {
+      // find this first element index in the parent
+      var $siblings = $($self[0].parentNode.childNodes);
+      for (var i = 0; i < $siblings.length; i++) {
+        if ($siblings[i] == $self[0]) {
+          return i;
+        }
+      }
+    }
+    return -1;
+  };
   Z.prototype.find = function (selector) {
     // zepto find
     var $self = this;
