@@ -27,7 +27,7 @@
 <body>
 	<section class="Index">
 		<!-- head -->
-		<header class="Header"></header>
+		<header class="Header">的撒大大是</header>
 		<!-- /head -->
 		<!-- content -->
 		<section class="Content"></section>
@@ -36,6 +36,13 @@
 		<footer class="Footer"></footer>
 		<!-- /footer -->
 	</section>
+	<script>
+		$('Header').on('click', function(event) {
+			event.preventDefault();
+			/* Act on the event */
+			alert(1)
+		});
+	</script>
 </body>
 
 </html>
