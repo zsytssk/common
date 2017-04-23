@@ -7,14 +7,14 @@ var zutil = {
   getElementsByName: function (root_dom, name) {
     var self = this;
     var arr = [];
-    if (root_dom.getChildByName && root_dom.getChildByName(name)) {
-      for (var i = 0; i < root_dom.numChildren; i++) {
-        if (root_dom.getChildAt(i).name == name) {
+    if(root_dom.getChildByName && root_dom.getChildByName(name)) {
+      for(var i = 0; i < root_dom.numChildren; i++) {
+        if(root_dom.getChildAt(i).name == name) {
           arr.push(root_dom.getChildAt(i));
         }
       }
     }
-    for (var i = 0; i < root_dom.numChildren; i++) {
+    for(var i = 0; i < root_dom.numChildren; i++) {
       arr = arr.concat(self.getElementsByName(root_dom.getChildAt(i), name));
     }
     return arr;
@@ -22,17 +22,22 @@ var zutil = {
   // Button Image Label ... laya.ui 中的组件
   getElementsByType: function (root_dom, type) {
     var self = this;
+    var typeParent;
     var arr = [];
-    var typeParent = self.mapType(type);
-    if (!typeParent) {
+    if(typeof (type) == 'string') {
+      typeParent = self.mapType(type);
+    } else if(typeof (type) == 'function') {
+      typeParent = type;
+    }
+    if(!typeParent) {
       return arr;
     }
-    for (var i = 0; i < root_dom.numChildren; i++) {
-      if (root_dom.getChildAt(i) instanceof typeParent) {
+    for(var i = 0; i < root_dom.numChildren; i++) {
+      if(root_dom.getChildAt(i) instanceof typeParent) {
         arr.push(root_dom.getChildAt(i));
       }
     }
-    for (var i = 0; i < root_dom.numChildren; i++) {
+    for(var i = 0; i < root_dom.numChildren; i++) {
       arr = arr.concat(self.getElementsByType(root_dom.getChildAt(i), type));
     }
     return arr;
@@ -41,14 +46,14 @@ var zutil = {
     var self = this;
     var type_arr = typeStr.split('.');
     var result;
-    for (var i = 0; i < type_arr.length; i++) {
+    for(var i = 0; i < type_arr.length; i++) {
       var type = type_arr[i];
-      if (i === 0) {
-        result = laya.ui[type] || ui[type] || laya.display[type];
+      if(i === 0) {
+        result = [type] | laya.ui[type] || ui[type] || laya.display[type];
       } else {
         result = result[type];
       }
-      if (!result) {
+      if(!result) {
         // 如果没有
         break;
       }
@@ -61,20 +66,20 @@ var zutil = {
     var self = this;
     var arr = [];
     var propArr = propStr.split(':');
-    if (!propArr.length) {
+    if(!propArr.length) {
       return arr;
     }
-    if (propArr[1] == 'false') {
+    if(propArr[1] == 'false') {
       propArr[1] = false;
-    } else if (propArr[1] == 'true') {
+    } else if(propArr[1] == 'true') {
       propArr[1] = true;
     }
-    for (var i = 0; i < root_dom.numChildren; i++) {
-      if (root_dom.getChildAt(i)[propArr[0]] == propArr[1]) {
+    for(var i = 0; i < root_dom.numChildren; i++) {
+      if(root_dom.getChildAt(i)[propArr[0]] == propArr[1]) {
         arr.push(root_dom.getChildAt(i));
       }
     }
-    for (var i = 0; i < root_dom.numChildren; i++) {
+    for(var i = 0; i < root_dom.numChildren; i++) {
       arr = arr.concat(self.getElementsByProperty(root_dom.getChildAt(i), propStr));
     }
     return arr;
@@ -83,7 +88,7 @@ var zutil = {
   getAllElements: function (root_dom) {
     var self = this;
     var arr = [];
-    for (var i = 0; i < root_dom.numChildren; i++) {
+    for(var i = 0; i < root_dom.numChildren; i++) {
       arr.push(root_dom.getChildAt(i));
       arr = arr.concat(self.getAllElements(root_dom.getChildAt(i)));
     }
@@ -93,7 +98,7 @@ var zutil = {
   getAllChildrens: function (root_dom) {
     var self = this;
     var arr = [];
-    for (var i = 0; i < root_dom.numChildren; i++) {
+    for(var i = 0; i < root_dom.numChildren; i++) {
       arr.push(root_dom.getChildAt(i));
     }
     return arr;
@@ -103,17 +108,17 @@ var zutil = {
     var self = this;
     var arr = [];
     var queryArr = queryString.split(' ');
-    if (!queryArr) {
+    if(!queryArr) {
       return arr;
     }
     var lastQueryStr = queryArr[queryArr.length - 1];
 
     var allElements = self.getAllElements(root_dom);
-    for (var i = 0; i < allElements.length; i++) {
-      if (!self.isChecked(allElements[i], lastQueryStr)) {
+    for(var i = 0; i < allElements.length; i++) {
+      if(!self.isChecked(allElements[i], lastQueryStr)) {
         continue;
       }
-      if (self._itemParentCheck(root_dom, allElements[i], queryArr)) {
+      if(self._itemParentCheck(root_dom, allElements[i], queryArr)) {
         arr.push(allElements[i]);
       }
     }
@@ -123,33 +128,55 @@ var zutil = {
     var self = this;
     var arr = [];
     var dom_parent = dom_origin.parent;
-    for (var i = 0; i < dom_parent.numChildren; i++) {
+    for(var i = 0; i < dom_parent.numChildren; i++) {
       var dom_item = dom_parent.getChildAt(i);
-      if (dom_item == dom_origin) {
+      if(dom_item == dom_origin) {
         continue;
       }
       arr.push(dom_item);
     }
     return arr;
   },
-  // 寻找最近符合条件的父类
+  /** 寻找最近符合条件的父类 */
   queryClosest: function (dom_item, queryString) {
     var self = this;
     var parent = dom_item.parent;
-    if (!parent) {
+    if(!parent) {
       return null;
     }
-    if (self.isChecked(parent, queryString)) {
+    if(self.isChecked(parent, queryString)) {
       return parent;
     }
     return self.queryClosest(parent, queryString);
   },
+  /** 寻找最顶级的父类 */
+  queryTop: function (dom_item) {
+    var self = this;
+    var parent = dom_item.parent;
+    if(!parent) {
+      return dom_item;
+    }
+    return self.queryTop(parent);
+  },
+  /** 获得本ctrl在目录树中绝对地址 */
+  getCtrlTreePath: function (dom_item, path) {
+    var self = this;
+    if(!path) {
+      path = '';
+    }
+    path = dom_item.name + '::' + path;
+    var parent = dom_item.parent;
+    if(!parent) {
+      return path.slice(0, -2);
+    }
+    return self.getCtrlTreePath(parent, path);
+  },
   isClosest: function (dom_item, dom_parent) {
     var self = this;
-    if (!dom_item) {
+    if(!dom_item) {
       return false;
     }
-    if (dom_item == dom_parent) {
+    if(dom_item == dom_parent) {
       return true;
     }
     var parent = dom_item.parent;
@@ -173,11 +200,11 @@ var zutil = {
   getElementIndex: function (dom_item) {
     var self = this;
     var dom_parent = dom_item.parent;
-    if (!parent) {
+    if(!parent) {
       return -1;
     }
-    for (var i = 0; i < dom_parent.numChildren; i++) {
-      if (dom_parent.getChildAt(i) == dom_item) {
+    for(var i = 0; i < dom_parent.numChildren; i++) {
+      if(dom_parent.getChildAt(i) == dom_item) {
         return i;
       }
     }
@@ -188,9 +215,9 @@ var zutil = {
     var doms = self.queryElements(root_dom, queryString);
     var arr = [];
 
-    for (var i = 0; i < doms.length; i++) {
+    for(var i = 0; i < doms.length; i++) {
       var controller = self.getControllerFromDom(doms[i]);
-      if (controller) {
+      if(controller) {
         arr.push(controller);
       }
     }
@@ -198,7 +225,7 @@ var zutil = {
   },
   getControllerFromDom: function (dom) {
     var self = this;
-    if (dom.controller) {
+    if(dom.controller) {
       return dom.controller;
     }
     return null;
@@ -208,13 +235,13 @@ var zutil = {
     var lastQueryStr = queryArr[queryArr.length - 1];
     var funcSelf = self._itemParentCheck.bind(self);
     var parent_dom = item_dom._parent;
-    if (self.isChecked(item_dom, lastQueryStr)) {
+    if(self.isChecked(item_dom, lastQueryStr)) {
       queryArr = queryArr.slice(0, -1);
     }
-    if (queryArr.length === 0) {
+    if(queryArr.length === 0) {
       return true;
     }
-    if (parent_dom == root_dom) {
+    if(parent_dom == root_dom) {
       // 如果已经找到最顶级 queryArr还没有完成所有匹配 返回false
       return false;
     }
@@ -222,13 +249,13 @@ var zutil = {
   },
   isChecked: function (check_item, condition_str) {
     var self = this;
-    if (condition_str.indexOf('|') == -1) {
+    if(condition_str.indexOf('|') == -1) {
       return self._typeIsChecked(check_item, condition_str);
     }
 
     var condition_arr = condition_str.split('|');
-    for (var i = 0; i < condition_arr.length; i++) {
-      if (!self._typeIsChecked(check_item, condition_arr[i])) {
+    for(var i = 0; i < condition_arr.length; i++) {
+      if(!self._typeIsChecked(check_item, condition_arr[i])) {
         return false;
       }
     }
@@ -241,17 +268,17 @@ var zutil = {
     var queryArr = type_str.split(':');
     var queryType = queryArr[0];
     var queryStr = queryArr[1];
-    if (queryType == 'name') {
+    if(queryType == 'name') {
       return check_item.name == queryStr;
-    } else if (queryType == 'type') {
+    } else if(queryType == 'type') {
       var typeParent = self.mapType(queryStr);
       return check_item instanceof typeParent;
-    } else if (queryType == 'property') {
+    } else if(queryType == 'property') {
       var propertyName = queryStr;
       var propertyValue = queryArr[2];
-      if (propertyValue == 'false') {
+      if(propertyValue == 'false') {
         propertyValue = false;
-      } else if (propertyValue == 'true') {
+      } else if(propertyValue == 'true') {
         propertyValue = true;
       }
       return check_item[propertyName] == propertyValue;
@@ -267,25 +294,25 @@ var zutil = {
   convertJSONToNode: function (jsonObj) {
     var self = this;
     var type = jsonObj.type;
-    if (!laya.ui[type]) {
+    if(!laya.ui[type]) {
       return null;
     }
     var node = new laya.ui[type]();
     var props = jsonObj.props;
-    for (var prop_name in props) {
+    for(var prop_name in props) {
       // 属性
       var prop_val = props[prop_name];
 
-      if (!isNaN(Number(prop_val))) {
+      if(!isNaN(Number(prop_val))) {
         prop_val = Number(prop_val);
       }
       node[prop_name] = prop_val;
     }
     var childs = jsonObj.childs;
-    for (var i = 0; i < childs.length; i++) {
+    for(var i = 0; i < childs.length; i++) {
       var child_json = childs[i];
       var child_node = self.convertJSONToNode(child_json);
-      if (child_node) {
+      if(child_node) {
         node.addChild(child_node);
       }
     }
@@ -297,7 +324,7 @@ var zutil = {
     result.type = self.getNodeLocalName(node);
     result.childs = [];
     var nodeChildren = node.childNodes;
-    for (var cidx = 0; cidx < nodeChildren.length; cidx++) {
+    for(var cidx = 0; cidx < nodeChildren.length; cidx++) {
       var child = nodeChildren.item(cidx);
       var childName = self.getNodeLocalName(child);
       var _child = self.xml2json(child);
@@ -305,9 +332,9 @@ var zutil = {
     }
 
     // Attributes
-    if (node.attributes) {
+    if(node.attributes) {
       result.props = {};
-      for (var aidx = 0; aidx < node.attributes.length; aidx++) {
+      for(var aidx = 0; aidx < node.attributes.length; aidx++) {
         var attr = node.attributes.item(aidx);
         result.props[attr.name] = attr.value;
       }
@@ -316,32 +343,32 @@ var zutil = {
   },
   getNodeLocalName: function (node) {
     var nodeLocalName = node.localName;
-    if (nodeLocalName === null) // Yeah, this is IE!!
+    if(nodeLocalName === null) // Yeah, this is IE!!
       nodeLocalName = node.baseName;
-    if (nodeLocalName === null || nodeLocalName === "") // =="" is IE too
+    if(nodeLocalName === null || nodeLocalName === "") // =="" is IE too
       nodeLocalName = node.nodeName;
     return nodeLocalName;
   },
   xml_str2json: function (xmlDocStr) {
     var self = this;
     var xmlDoc = self.parseXmlString(xmlDocStr);
-    if (xmlDoc !== null)
+    if(xmlDoc !== null)
       return self.xml2json(xmlDoc);
     else
       return null;
   },
   parseXmlString: function (xmlDocStr) {
     var self = this;
-    if (xmlDocStr === undefined) {
+    if(xmlDocStr === undefined) {
       return null;
     }
     var xmlDoc, parser;
-    if (window.DOMParser) {
+    if(window.DOMParser) {
       parser = new window.DOMParser();
     }
     try {
       xmlDoc = parser.parseFromString(xmlDocStr, "text/xml").firstChild;
-    } catch (err) {
+    } catch(err) {
       xmlDoc = null;
     }
     return xmlDoc;
@@ -349,7 +376,7 @@ var zutil = {
   // 防止按钮多次点击 按钮锁定一秒
   isSpriteLock: function (sprite) {
     var self = zutil;
-    if (sprite.isLock) {
+    if(sprite.isLock) {
       return true;
     }
     sprite.isLock = true;
@@ -358,40 +385,57 @@ var zutil = {
     });
     return false;
   },
+  /**
+   * log 所有信息只在debugType=warn|error才会执行
+   */
+  createLogAll: function () {
+    var self = zutil;
+    var type = self.debugType2();
+    var empty_fn = function () {};
+
+    if(!type) {
+      return empty_fn;
+    }
+    if(!window.console) {
+      return empty_fn;
+    }
+    if(type != 'warn' && type != 'error') {
+      return empty_fn;
+    }
+    return this.createLog();
+  },
   // log
-  log: function (msg) {
+  createLog: function () {
     var self = zutil;
 
-    if (!self.debugType()) {
-      return true;
+    var type = self.debugType2();
+
+    if(!type) {
+      return;
     }
-    var type = self.debugType();
+    if(!window.console) {
+      return;
+    }
     log = console[type];
-    if (!log) {
+    if(!log) {
       log = console.log;
     }
-    if (arguments.length == 1 && (typeof (msg) != 'function' && typeof (msg) != 'object')) {
-      msg = msg + '';
-      var style_obj = self.debugStyle();
-      var style = '';
-      for (var name in style_obj) {
-        style += name + ':' + style_obj[name] + ';';
-      }
-
-      log.call(console, '%c %s', style, msg);
-    } else {
-      log.apply(console, arguments);
+    var style_obj = self.debugStyle2();
+    var style = '';
+    for(var name in style_obj) {
+      style += name + ':' + style_obj[name] + ';';
     }
+    return log.bind(window.console, '%c %s', style);
   },
   // 分析字符串
   getQueryString: function (query) {
     var query_string = {};
     var vars = query.split("&");
-    for (var i = 0; i < vars.length; i++) {
+    for(var i = 0; i < vars.length; i++) {
       var pair = vars[i].split("=");
-      if (typeof query_string[pair[0]] === "undefined") {
+      if(typeof query_string[pair[0]] === "undefined") {
         query_string[pair[0]] = decodeURIComponent(pair[1]);
-      } else if (typeof query_string[pair[0]] === "string") {
+      } else if(typeof query_string[pair[0]] === "string") {
         var arr = [query_string[pair[0]], decodeURIComponent(pair[1])];
         query_string[pair[0]] = arr;
       } else {
@@ -403,22 +447,27 @@ var zutil = {
   // 检测页面的状态
   detectModel: function (state) {
     var self = this;
+    var result;
+    if(state in this) {
+      return this[state];
+    }
     var queryStr = location.href.split('?')[1];
-    if (!queryStr) {
-      return false;
+    if(!queryStr) {
+      result = false;
     }
     queryStr = queryStr.replace(location.hash, '');
     var query = self.getQueryString(queryStr)[state];
-    if (query) {
-      return query;
+    if(query) {
+      result = query;
     }
-    return false;
+    this[state] = result;
+    return result;
   },
-  debugType: function () {
+  debugType2: function () {
     var self = this;
     return self.detectModel('debugType') || self.detectModel('debugFE');
   },
-  debugStyle: function () {
+  debugStyle2: function () {
     var self = this;
     var style = self.detectModel('debugStyle');
     var style_obj = {
@@ -428,55 +477,43 @@ var zutil = {
       'color': 'DodgerBlue',
       'text-shadow': '0 1px 0 #ccc, 0 2 px 0# c9c9c9, 0 3 px 0# bbb, 0 4 px 0# b9b9b9,0 5 px 0# aaa,0 6 px 1 px rgba(0, 0, 0, .1),0 0 5 px rgba(0, 0, 0, .1),0 1 px 3 px rgba(0, 0, 0, .3),0 3 px 5 px rgba(0, 0, 0, .2),0 5 px 10 px rgba(0, 0, 0, .25),0 10 px 10 px rgba(0, 0, 0, .2),0 20 px 20 px rgba(0, 0, 0, .15);'
     };
-    if (!style) {
+    if(!style) {
       return style_obj;
     }
     var style_arr = style.replace(/[\{\}]/g, '').split(';');
     style_arr.forEach(function (item) {
       item = item.replace(';', '');
       var matchs = item.split(':');
-      if (matchs.length !== 2) {
+      if(matchs.length !== 2) {
         return true;
       }
       style_obj[matchs[0]] = matchs[1];
     });
     return style_obj;
   },
-  showStat: function () {
-    var self = this;
-    return self.detectModel('showStat');
-  },
-  isAutoTest: function () {
-    var self = this;
-    return self.detectModel('autoTest');
-  },
-  isShowOberverCmd: function () {
-    var self = this;
-    return self.detectModel('showOberverCmd');
-  },
   compareObj: function (x, y) {
-    if (x === y) {
+    if(x === y) {
       return true;
     }
 
-    for (var p in x) {
-      if (x.hasOwnProperty(p)) {
-        if (!y.hasOwnProperty(p)) {
+    for(var p in x) {
+      if(x.hasOwnProperty(p)) {
+        if(!y.hasOwnProperty(p)) {
           return false;
         }
 
-        if (x[p] === y[p]) {
+        if(x[p] === y[p]) {
           continue;
         }
 
-        if (typeof (x[p]) !== "object") {
+        if(typeof (x[p]) !== "object") {
           return false;
         }
       }
     }
 
-    for (p in y) {
-      if (y.hasOwnProperty(p) && !x.hasOwnProperty(p)) {
+    for(p in y) {
+      if(y.hasOwnProperty(p) && !x.hasOwnProperty(p)) {
         return false;
       }
     }
@@ -484,32 +521,55 @@ var zutil = {
   },
   extend: function (sub_class, super_class, name_sapce) {
     var self = this;
-    for (var p in super_class)
-      if (b.hasOwnProperty(p)) sub_class[p] = super_class[p];
+    for(var p in super_class) {
+      if(sub_class.hasOwnProperty(p)) {
+        sub_class[p] = super_class[p];
+      }
+    }
+    if(typeof (sub_class) != 'function' || typeof (super_class) != 'function') {
+      return;
+    }
 
     function __() {
       this.constructor = sub_class;
     }
     sub_class.prototype = super_class === null ? Object.create(super_class) : (__.prototype = super_class.prototype, new __());
-    if (name_sapce) {
+    if(name_sapce) {
       var arr_space = name_sapce.split('.');
       self.nameMap(arr_space, null, sub_class);
     }
   },
   nameMap: function (arr_space, obj, end_obj) {
     var self = this;
-    if (!obj) {
+    if(!obj) {
       obj = window;
     }
-    if (arr_space.length == 1) {
-      return (obj[arr_space[0]] = end_obj);
+    if(arr_space.length == 1) {
+      return(obj[arr_space[0]] = end_obj);
     }
-    if (!obj[arr_space[0]]) {
+    if(!obj[arr_space[0]]) {
       obj[arr_space[0]] = {};
     }
     return self.nameMap(arr_space.slice(1), obj[arr_space[0]], end_obj);
   },
   calcStrLen: function (str) {
     return str.replace(/[^\x00-\xff]/g, "01").length;
+  },
+  reload: function () {
+    if(this.isInWeiXin()) {
+      location.href = location.origin + location.pathname + location.search + '&timestamp=' + (new Date()).getTime() + location.hash;
+      return;
+    }
+    window.location.reload(true);
+  },
+  isInWeiXin: function () {
+    var ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger') {
+      return true;
+    } else {
+      return false;
+    }
   }
 };
+zutil.log = zutil.createLog();
+zutil.logAll = zutil.createLogAll();
