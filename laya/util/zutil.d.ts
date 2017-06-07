@@ -53,6 +53,8 @@ declare let zutil: {
   mapType(query: string): any;
   /** 获取字符串的len, 汉字算两个 */
   calcStrLen(str: string): number;
+  /** 截取字符串, 汉字算两个 */
+  ellipsisStr(str: string | number, max_len: number): string;
   /** sprite 是否被锁定 */
   isSpriteLock(sprite: Laya.Node, type_str: string): boolean;
   /** log */
