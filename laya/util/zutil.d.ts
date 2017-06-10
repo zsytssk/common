@@ -77,4 +77,6 @@ declare let zutil: {
   isDebug(): boolean;
   /** 是否是本地自动测试 --  autoTest */
   isAutoTest(): boolean;
+  /**创建随机字符串*/
+  createRandomString(): string
 };

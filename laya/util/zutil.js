@@ -49,7 +49,11 @@ var zutil = {
     for(var i = 0; i < type_arr.length; i++) {
       var type = type_arr[i];
       if(i === 0) {
-        result = [type] | laya.ui[type] || ui[type] || laya.display[type];
+        if(typeof (type) == 'function') {
+          result = type;
+          break;
+        }
+        result = laya.ui[type] || ui[type] || laya.display[type];
       } else {
         result = result[type];
       }
@@ -58,7 +62,6 @@ var zutil = {
         break;
       }
     }
-
     return result;
   },
   // 通过属性来寻找子类 propertyName:value
@@ -140,12 +143,12 @@ var zutil = {
   /** 寻找最近符合条件的父类 */
   queryClosest: function (dom_item, queryString) {
     var self = this;
+    if(self.isChecked(dom_item, queryString)) {
+      return dom_item;
+    }
     var parent = dom_item.parent;
     if(!parent) {
       return null;
-    }
-    if(self.isChecked(parent, queryString)) {
-      return parent;
     }
     return self.queryClosest(parent, queryString);
   },
@@ -234,7 +237,7 @@ var zutil = {
     var self = this;
     var lastQueryStr = queryArr[queryArr.length - 1];
     var funcSelf = self._itemParentCheck.bind(self);
-    var parent_dom = item_dom._parent;
+    var parent_dom = item_dom._parent || item_dom.parent;
     if(self.isChecked(item_dom, lastQueryStr)) {
       queryArr = queryArr.slice(0, -1);
     }
@@ -294,10 +297,16 @@ var zutil = {
   convertJSONToNode: function (jsonObj) {
     var self = this;
     var type = jsonObj.type;
-    if(!laya.ui[type]) {
-      return null;
+    var node;
+    if(laya.ui[type]) {
+      node = new laya.ui[type]();
+    } else if(type == 'Sprite') {
+      node = new Laya.Sprite();
+    } else if(type == 'SkeletonPlayer') {
+      node = new laya.ani.bone.Skeleton();
+    } else {
+      return;
     }
-    var node = new laya.ui[type]();
     var props = jsonObj.props;
     for(var prop_name in props) {
       // 属性
@@ -407,16 +416,17 @@ var zutil = {
   // log
   createLog: function () {
     var self = zutil;
+    var empty_fn = function () {};
 
     var type = self.debugType2();
 
     if(!type) {
-      return;
+      return empty_fn;
     }
     if(!window.console) {
-      return;
+      return empty_fn;
     }
-    log = console[type];
+    var log = console[type];
     if(!log) {
       log = console.log;
     }
@@ -453,7 +463,7 @@ var zutil = {
     }
     var queryStr = location.href.split('?')[1];
     if(!queryStr) {
-      result = false;
+      return false;
     }
     queryStr = queryStr.replace(location.hash, '');
     var query = self.getQueryString(queryStr)[state];
@@ -522,12 +532,10 @@ var zutil = {
   extend: function (sub_class, super_class, name_sapce) {
     var self = this;
     for(var p in super_class) {
-      if(sub_class.hasOwnProperty(p)) {
-        sub_class[p] = super_class[p];
-      }
+      sub_class[p] = super_class[p];
     }
     if(typeof (sub_class) != 'function' || typeof (super_class) != 'function') {
-      return;
+      return sub_class;
     }
 
     function __() {
@@ -538,6 +546,7 @@ var zutil = {
       var arr_space = name_sapce.split('.');
       self.nameMap(arr_space, null, sub_class);
     }
+    return sub_class;
   },
   nameMap: function (arr_space, obj, end_obj) {
     var self = this;
@@ -555,6 +564,36 @@ var zutil = {
   calcStrLen: function (str) {
     return str.replace(/[^\x00-\xff]/g, "01").length;
   },
+  ellipsisStr(text, max_len) {
+    /**非NaN数字转化为字符串*/
+    if(typeof (text) == 'number' && text == text) {
+      text = text + '';
+    }
+    /**空字符串或者其他非法参数不做处理*/
+    if(!text || typeof (text) != 'string') {
+      return '';
+    }
+    var text_len = zutil.calcStrLen(text);
+    if(text_len <= max_len) {
+      return text;
+    }
+
+    var result_str = '';
+    var result_len = 0;
+    /**一个个的添加字符串如果字符串是中文+两位, 英文加一位 直到 长度超过max_len*/
+    for(var i = 0; i < text.length; i++) {
+      if(/[^\x00-\xff]/.test(text[i])) {
+        result_len += 2;
+      } else {
+        result_len += 1;
+      }
+      if(result_len > max_len - 2) { // 因为最终的字符串要加上...显示字符串最大为max_len-3
+        break;
+      }
+      result_str += text[i];
+    }
+    return result_str + '..';
+  },
   reload: function () {
     if(this.isInWeiXin()) {
       location.href = location.origin + location.pathname + location.search + '&timestamp=' + (new Date()).getTime() + location.hash;
@@ -569,7 +608,13 @@ var zutil = {
     } else {
       return false;
     }
+  },
+  createRandomString() {
+    return(Math.random()).toString().replace('0.', '');
   }
 };
 zutil.log = zutil.createLog();
 zutil.logAll = zutil.createLogAll();
+zutil.about = () => {
+  zutil.log(decodeURI(TIP_TXT.about));
+};
