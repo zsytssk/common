@@ -8,7 +8,7 @@ declare let zutil: {
    */
   getElementsByName<T>(root_dom: T, name: string): T[];
   /** 获取所有的符合指定类型子孙元素集合 */
-  getElementsByType<T>(root_dom: T, type: string): T[];
+  getElementsByType<T>(root_dom: T, type: any): T[];
   /** 获取所有的符合指定属性子孙元素集合 */
   getElementsByProperty<T>(root_dom: T, propStr: string): T[];
   /** 获取所有的子孙元素 */
@@ -56,10 +56,9 @@ declare let zutil: {
   /** 获取字符串的len, 汉字算两个 */
   calcStrLen(str: string): number;
   /** 截取字符串, 汉字算两个 */
-  ellipsisStr(str: string | number, max_len: number): string;
+  ellipsisStr(str: string | number, max_len: number, append_str?: string): string;
   /** sprite 是否被锁定 */
   isSpriteLock(sprite: Laya.Node, type_str: string): boolean;
-  /** log 所有信息只在debugType=warn|error才会执行 */
   logAll(...args: any[]): void;
   /** log */
   log(...args: any[]): void;
@@ -70,13 +69,19 @@ declare let zutil: {
   /** 检测debug的类型 debugType || debugFE*/
   debugType(): string;
   debugStyle(): {};
-  /** 检测是否显示stat -- showStat*/
-  showStat(): {};
-  isShowOberverCmd(): boolean;
-  /** 是否是dubug模式 */
-  isDebug(): boolean;
-  /** 是否是本地自动测试 --  autoTest */
-  isAutoTest(): boolean;
-  /**创建随机字符串*/
-  createRandomString(): string
+  /**刷新页面*/
+  reload(): void;
+  /**是否在微信中*/
+  isInWeiXin(): boolean;
+  createRandomString(): string;
+  /**将sprite中的所有子类放在新的class中*/
+  covertDom<T>(sprite: T, new_class): T;
+  /**给Sprite添加longPress, shortPress事件*/
+  addPressEvent(sprie);
+  /**
+   * 将秒数转化为00::00::00形式
+   * time: 时间秒数
+   * num显示的位数, 秒,分,时, eg:num=2: 00::00
+   */
+  formatTime(time: number, num?: number): string
 };
