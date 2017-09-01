@@ -62,6 +62,8 @@ declare let zutil: {
   logAll(...args: any[]): void;
   /** log */
   log(...args: any[]): void;
+  /** log error*/
+  logErr(...args: any[]): void;
   /** 解析字符串中查找 name=value */
   getQueryString(query: string): {} | false;
   /** 解析locatio.href */
