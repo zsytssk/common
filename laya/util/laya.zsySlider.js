@@ -77,10 +77,7 @@
   _proto.addMask = function () {
     var self = this;
     var dom_con = self.dom.con;
-    dom_con.scrollRect = new laya.maths.Rectangle(0, 0, dom_con.width, dom_con.height);
-
-    // var mask_sprite = new laya.display.Sprite();
-    // dom_con.mask = mask_sprite;
+    dom_con.scrollRect = new Laya.Rectangle(0, 0, dom_con.width, dom_con.height);
   };
 
   // 将原来ViewStact标签换成新的HBox
@@ -130,6 +127,7 @@
     var mouse_down = Laya.Event.MOUSE_DOWN;
     var mouse_move = Laya.Event.MOUSE_MOVE;
     var mouse_up = Laya.Event.MOUSE_UP;
+    var mouse_out = Laya.Event.MOUSE_OUT;
     var dom_list = self.dom.list;
 
     if (self.config.pagination) {
@@ -138,7 +136,8 @@
 
     dom_list.on(mouse_down, self, self.onTouchStart);
     dom_list.on(mouse_move, self, self.onTouchMove);
-    Laya.stage.on(mouse_up, self, self.onTouchEnd);
+    dom_list.on(mouse_up, self, self.onTouchEnd);
+    dom_list.on(mouse_out, self, self.onTouchEnd);
   };
 
   // 点击paginationHandler的处理函数
@@ -197,30 +196,32 @@
       y: event.stageY - self.tmp.start_point.y
     };
     dom_list.x = self.tmp.origin_pos.x + self.tmp.move_dist.x;
-    self.detectNextShowIndex();
+    self.detectMoveDirection(self.tmp.move_dist.x);
   };
-
+  _proto.detectMoveDirection = function (move_x) {
+    var self = this;
+    var move_direction;
+    if (move_x > 0) {
+      move_direction = 'left';
+    } else if (move_x < 0) {
+      move_direction = 'right';
+    } else {
+      // 没有移动不做处理
+      self.tmp.next_show_index = self.config.cur_index;
+      return true;
+    }
+    self.detectNextShowIndex(move_direction);
+  }
   /*
     如果用户往前划, 将前面的item 显示到前面, 向后滑类式
     预估将要看到的item
   */
-  _proto.detectNextShowIndex = function () {
+  _proto.detectNextShowIndex = function (move_direction) {
     var self = this;
     var cur_index = self.config.cur_index;
     var dom_items = self.dom.items;
     var items_num = dom_items.length;
     var move_direction, next_show_index;
-    var move_dist = self.tmp.move_dist.x;
-
-    if (move_dist > 0) {
-      move_direction = 'left';
-    } else if (move_dist < 0) {
-      move_direction = 'right';
-    } else {
-      // 没有移动不做处理
-      self.tmp.next_show_index = cur_index;
-      return true;
-    }
 
     if (move_direction == 'left') {
       next_show_index = cur_index - 1;
@@ -288,6 +289,26 @@
     self.animateMove();
   };
 
+  _proto.next = function () {
+    var self = this;
+    var status = self.getTouchStatus();
+    if (status != 'end') {
+      return;
+    }
+    var move_direction = "right";
+    self.detectNextShowIndex(move_direction);
+    self.animateMove();
+  }
+  _proto.prev = function () {
+    var self = this;
+    var status = self.getTouchStatus();
+    if (status != 'end') {
+      return;
+    }
+    var move_direction = "left";
+    self.detectNextShowIndex(move_direction);
+    self.animateMove();
+  }
   // 滑动结束 滚动最终的位置动画
   _proto.animateMove = function () {
     var self = this;
@@ -364,7 +385,7 @@
   // 获取 滚动的状态
   _proto.getTouchStatus = function () {
     var self = this;
-    return self.dom.con._zsySlider_touchtatus;
+    return self.dom.con._zsySlider_touchtatus || 'end';
   };
 
 })();
