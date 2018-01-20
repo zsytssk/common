@@ -1,16 +1,12 @@
 ﻿#target photoshop
-#include "libs/json2.js";
+#include "../libs/json2.js";
 
 var origUnits = app.preferences.rulerUnits;
 app.preferences.rulerUnits = Units.PIXELS;
 
 var activeDoc = app.activeDocument;
-if (typeof activeDoc.path == 'undefined') {
-  var myPath = 'c:';
-} else {
-  var myPath = app.activeDocument.path;
-}
-filePath = myPath + '/path_coords.txt';
+
+var filePath = (new File($.fileName)).parent + '/path_coords.txt';
 var f = new File(filePath);
 f.encoding = 'UTF8';
 f.open('w');
@@ -23,8 +19,9 @@ for (var k = 0; k < activeDoc.layers.length; k++)  {
     for (var j = 0; j < myPathItem.subPathItems.length; j++) {
       var mySubPathItem = myPathItem.subPathItems[j];
       var sub_path_info = getSubPathInfo(mySubPathItem);
-      f.writeln(activeLayer.name + ':');
+      f.writeln('"' + activeLayer.name + '":');
       f.writeln(JSON.stringify(sub_path_info));
+      f.writeln(',');
     }
   }
 }
