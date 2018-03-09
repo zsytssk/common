@@ -6,7 +6,7 @@
 
 * js 代码
 
-```js
+```javascript
 var help_glr = new zsySlider(your_help_dom, {
   origin_index: 0, // 初始显示的index
   animate_time: 500, // 动画执行时间
