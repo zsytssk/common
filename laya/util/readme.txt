@@ -1,8 +1,8 @@
 ## zsySlider
 
 * dom 结构
-  ![dom 结构]:(https://raw.githubusercontent.com/zsytssk/common/master/laya/util/zsySlider_dom.png)
-  ![alt text](https://raw.githubusercontent.com/zsytssk/common/master/laya/util/zsySlider_dom.png "Logo Title Text 1")
+
+![dom 结构](https://raw.githubusercontent.com/zsytssk/common/master/laya/util/zsySlider_dom.png "dom 结构")
 
 * js 代码
 
