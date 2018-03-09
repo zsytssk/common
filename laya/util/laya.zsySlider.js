@@ -1,4 +1,4 @@
-(function () {
+(function() {
   var default_config = {
     origin_index: 0, // 初始显示的index
     animate_time: 500, // 动画执行时间
@@ -18,11 +18,11 @@
     self.initConfig(options);
     self.init();
   }
-  Laya.class(zsySlider, 'zsySlider');
+  Laya.class(zsySlider, "zsySlider");
   var _proto = zsySlider.prototype;
 
   // 初始化配置
-  _proto.initConfig = function (options) {
+  _proto.initConfig = function(options) {
     var self = this;
     if (!options) {
       options = {};
@@ -30,19 +30,22 @@
 
     self.config.cur_index = options.origin_index || default_config.origin_index;
     self.config.item_space = options.item_space || default_config.item_space;
-    self.config.animate_time = options.animate_time || default_config.animate_time;
+    self.config.animate_time =
+      options.animate_time || default_config.animate_time;
     self.config.pagination = options.pagination || default_config.pagination;
-    self.config.end_call_back = options.end_call_back || default_config.end_call_back;
+    self.config.end_call_back =
+      options.end_call_back || default_config.end_call_back;
 
     // 每次移动的距离
     if (options.item_width) {
       self.config.move_space = options.item_width + self.config.item_space;
       // 每次移动超过这个阈值 才会移动到上一个或者下一个, 不然只是移动到原来的位置
-      self.config.move_scope = self.config.move_space * default_config.move_scope_rate;
+      self.config.move_scope =
+        self.config.move_space * default_config.move_scope_rate;
     }
   };
 
-  _proto.init = function () {
+  _proto.init = function() {
     var self = this;
     self.initDom();
     self.initEvent();
@@ -50,16 +53,17 @@
     // 如果option中没有设置item_width, 就根据当前的宽度计算 应该移动的位移
     if (!self.config.move_space) {
       self.config.move_space = self.dom.con.width + self.config.item_space;
-      self.config.move_scope = self.config.move_space * default_config.move_scope_rate;
+      self.config.move_scope =
+        self.config.move_space * default_config.move_scope_rate;
     }
   };
 
-  _proto.initDom = function () {
+  _proto.initDom = function() {
     var self = this;
     var dom_glr = self.dom.glr;
 
-    self.dom.con = dom_glr.getChildByName('con');
-    self.dom.list = self.dom.con.getChildByName('list');
+    self.dom.con = dom_glr.getChildByName("con");
+    self.dom.list = self.dom.con.getChildByName("list");
     self.replaceGlrList();
     self.addMask();
 
@@ -67,28 +71,37 @@
     for (var i = 0; i < self.dom.list.numChildren; i++) {
       self.dom.items.push(self.dom.list.getChildAt(i));
     }
-
-    if (self.config.pagination) {
-      self.dom.pagination = dom_glr.getChildByName('pagination');
+    var pagination = self.config.pagination;
+    if (pagination) {
+      if (typeof pagination == "boolean") {
+        self.dom.pagination = dom_glr.getChildByName("pagination");
+      } else {
+        self.dom.pagination = pagination;
+      }
     }
   };
 
   // 在con上面添加mask
-  _proto.addMask = function () {
+  _proto.addMask = function() {
     var self = this;
     var dom_con = self.dom.con;
-    dom_con.scrollRect = new Laya.Rectangle(0, 0, dom_con.width, dom_con.height);
+    dom_con.scrollRect = new Laya.Rectangle(
+      0,
+      0,
+      dom_con.width,
+      dom_con.height
+    );
   };
 
   // 将原来ViewStact标签换成新的HBox
-  _proto.replaceGlrList = function () {
+  _proto.replaceGlrList = function() {
     var self = this;
     var dom_con = self.dom.con;
 
     var dom_list = self.dom.list;
     var dom_new_list = new Laya.Box();
 
-    dom_new_list.name = 'list';
+    dom_new_list.name = "list";
     var arr_items = [];
     /*
       将list添加在数组中, 然后在添加到新的list中
@@ -96,7 +109,7 @@
     */
     for (var i = 0; i < dom_list.numChildren; i++) {
       var dom_item = dom_list.getChildAt(i);
-      dom_item.name = 'item';
+      dom_item.name = "item";
       dom_item.visible = true;
       arr_items.push(dom_item);
     }
@@ -112,17 +125,16 @@
     self.dom.list = dom_new_list;
     dom_con.addChild(dom_new_list);
     dom_new_list.space = default_config.item_space;
-    dom_new_list.cacheAs = 'none';
+    dom_new_list.cacheAs = "none";
     dom_new_list.x = dom_list.x;
     dom_new_list.y = dom_list.y;
 
     // 删除原有的list
     dom_con.removeChild(dom_list);
     dom_list.destroy();
-
   };
 
-  _proto.initEvent = function () {
+  _proto.initEvent = function() {
     var self = this;
     var mouse_down = Laya.Event.MOUSE_DOWN;
     var mouse_move = Laya.Event.MOUSE_MOVE;
@@ -131,7 +143,12 @@
     var dom_list = self.dom.list;
 
     if (self.config.pagination) {
-      self.dom.pagination.selectHandler = Laya.Handler.create(self, self.paginationHandler, null, false);
+      self.dom.pagination.selectHandler = Laya.Handler.create(
+        self,
+        self.paginationHandler,
+        null,
+        false
+      );
     }
 
     dom_list.on(mouse_down, self, self.onTouchStart);
@@ -141,11 +158,11 @@
   };
 
   // 点击paginationHandler的处理函数
-  _proto.paginationHandler = function (index) {
+  _proto.paginationHandler = function(index) {
     var self = this;
     var dom_pagination = self.dom.pagination;
 
-    if (self.getTouchStatus() == 'onEndAnimate') {
+    if (self.getTouchStatus() == "onEndAnimate") {
       // 正在touchEnd动画时候不做处理
       return true;
     }
@@ -154,19 +171,19 @@
     var move_direction, next_show_index;
     next_show_index = index;
     if (cur_index > index) {
-      move_direction = 'left';
+      move_direction = "left";
     } else {
-      move_direction = 'right';
+      move_direction = "right";
     }
     self.handleMoveEffect(move_direction, next_show_index);
     self.animateMove();
   };
 
   // con 的 mouseDown
-  _proto.onTouchStart = function (event) {
+  _proto.onTouchStart = function(event) {
     var self = this;
     var dom_list = event.target;
-    if (self.getTouchStatus() == 'onEndAnimate') {
+    if (self.getTouchStatus() == "onEndAnimate") {
       // 正在touchEnd动画时候不做处理
       return true;
     }
@@ -177,19 +194,19 @@
     self.tmp.origin_pos = {
       x: dom_list.x
     };
-    self.setTouchStatus('start');
+    self.setTouchStatus("start");
   };
 
   // con 的 mouseMove
-  _proto.onTouchMove = function (event) {
+  _proto.onTouchMove = function(event) {
     var self = this;
     var dom_list = event.target;
-    if (self.getTouchStatus() !== 'start' && self.getTouchStatus() !== 'move') {
+    if (self.getTouchStatus() !== "start" && self.getTouchStatus() !== "move") {
       return true;
     }
 
-    if (self.getTouchStatus() == 'start') {
-      self.setTouchStatus('move');
+    if (self.getTouchStatus() == "start") {
+      self.setTouchStatus("move");
     }
     self.tmp.move_dist = {
       x: event.stageX - self.tmp.start_point.x,
@@ -198,32 +215,32 @@
     dom_list.x = self.tmp.origin_pos.x + self.tmp.move_dist.x;
     self.detectMoveDirection(self.tmp.move_dist.x);
   };
-  _proto.detectMoveDirection = function (move_x) {
+  _proto.detectMoveDirection = function(move_x) {
     var self = this;
     var move_direction;
     if (move_x > 0) {
-      move_direction = 'left';
+      move_direction = "left";
     } else if (move_x < 0) {
-      move_direction = 'right';
+      move_direction = "right";
     } else {
       // 没有移动不做处理
       self.tmp.next_show_index = self.config.cur_index;
       return true;
     }
     self.detectNextShowIndex(move_direction);
-  }
+  };
   /*
     如果用户往前划, 将前面的item 显示到前面, 向后滑类式
     预估将要看到的item
   */
-  _proto.detectNextShowIndex = function (move_direction) {
+  _proto.detectNextShowIndex = function(move_direction) {
     var self = this;
     var cur_index = self.config.cur_index;
     var dom_items = self.dom.items;
     var items_num = dom_items.length;
     var move_direction, next_show_index;
 
-    if (move_direction == 'left') {
+    if (move_direction == "left") {
       next_show_index = cur_index - 1;
     } else {
       next_show_index = cur_index + 1;
@@ -240,13 +257,15 @@
   /*
     通过移动的方向, next_show_index, 将下一个显示的item 移动到相应的位置, 隐藏其他的
   */
-  _proto.handleMoveEffect = function (move_direction, next_show_index) {
+  _proto.handleMoveEffect = function(move_direction, next_show_index) {
     var self = this;
     var cur_index = self.config.cur_index;
     var dom_items = self.dom.items;
     var move_space = self.config.move_space;
-    if (move_direction == self.tmp.move_direction &&
-      next_show_index == self.tmp.next_show_index) {
+    if (
+      move_direction == self.tmp.move_direction &&
+      next_show_index == self.tmp.next_show_index
+    ) {
       // next_show_index 已经出现 无需处理
       return true;
     }
@@ -263,7 +282,7 @@
 
     var dom_next_show = dom_items[next_show_index];
     dom_next_show.visible = true;
-    if (move_direction == 'left') {
+    if (move_direction == "left") {
       dom_next_show.x = -move_space;
     } else {
       dom_next_show.x = move_space;
@@ -271,10 +290,10 @@
   };
 
   // con 的 mouseUp
-  _proto.onTouchEnd = function (event) {
+  _proto.onTouchEnd = function(event) {
     var self = this;
     var move_dist = self.tmp && self.tmp.move_dist && self.tmp.move_dist.x;
-    if (self.getTouchStatus() !== 'move') {
+    if (self.getTouchStatus() !== "move") {
       return true;
     }
     if (!move_dist) {
@@ -289,42 +308,41 @@
     self.animateMove();
   };
 
-  _proto.next = function () {
+  _proto.next = function() {
     var self = this;
     var status = self.getTouchStatus();
-    if (status != 'end') {
+    if (status != "end") {
       return;
     }
     var move_direction = "right";
     self.detectNextShowIndex(move_direction);
     self.animateMove();
-  }
-  _proto.prev = function () {
+  };
+  _proto.prev = function() {
     var self = this;
     var status = self.getTouchStatus();
-    if (status != 'end') {
+    if (status != "end") {
       return;
     }
     var move_direction = "left";
     self.detectNextShowIndex(move_direction);
     self.animateMove();
-  }
+  };
   // 滑动结束 滚动最终的位置动画
-  _proto.animateMove = function () {
+  _proto.animateMove = function() {
     var self = this;
     var end_call_back = self.config.end_call_back;
     var next_show_index = self.tmp.next_show_index;
     var move_space = self.config.move_space;
 
-
-    self.setTouchStatus('onEndAnimate');
+    self.setTouchStatus("onEndAnimate");
 
     if (self.config.cur_index == next_show_index) {
       // 如果两者相等 移动的距离为0
       move_space = 0;
     } else {
       self.config.cur_index = next_show_index;
-      if (self.tmp.move_direction == 'right') {
+      if (self.tmp.move_direction == "right") {
         move_space = -move_space;
       }
     }
@@ -335,29 +353,35 @@
     };
 
     var Tween = new Laya.Tween();
-    Tween.to(dom_list, changeProper, self.config.animate_time, null, Laya.Handler.create(self, callLater));
+    Tween.to(
+      dom_list,
+      changeProper,
+      self.config.animate_time,
+      null,
+      Laya.Handler.create(self, callLater)
+    );
 
     function callLater() {
       if (self.config.pagination) {
         self.dom.pagination.selectedIndex = self.config.cur_index; // pagination的处理
       }
-      if (end_call_back && typeof (end_call_back) == 'function') {
+      if (end_call_back && typeof end_call_back == "function") {
         end_call_back(self.config.cur_index);
       }
       self.reset();
     }
   };
   // 重置游戏
-  _proto.reset = function () {
+  _proto.reset = function() {
     var self = this;
     self.resetGlrCon();
     self.tmp = {};
 
-    self.setTouchStatus('end');
+    self.setTouchStatus("end");
   };
 
   // 滚动结束之后, reset所有的item
-  _proto.resetGlrCon = function () {
+  _proto.resetGlrCon = function() {
     var self = this;
     var dom_list = self.dom.list;
     var dom_items = self.dom.items;
@@ -377,15 +401,14 @@
   };
 
   // 设置滚动的状态
-  _proto.setTouchStatus = function (status) {
+  _proto.setTouchStatus = function(status) {
     var self = this;
     self.dom.con._zsySlider_touchtatus = status;
   };
 
   // 获取 滚动的状态
-  _proto.getTouchStatus = function () {
+  _proto.getTouchStatus = function() {
     var self = this;
-    return self.dom.con._zsySlider_touchtatus || 'end';
+    return self.dom.con._zsySlider_touchtatus || "end";
   };
-
 })();
