@@ -479,6 +479,18 @@ export var zutil = {
     }
     return log.bind(window.console, '%c %s', style);
   },
+  /**log信息 */
+  log: function (...any) {
+
+  },
+  /**log错误信息 */
+  logErr: function (...any) {
+
+  },
+  /**一般不显示的信息 */
+  logAll: function (...any) {
+
+  },
   // 分析字符串
   getQueryString: function (query) {
     var query_string = {};
@@ -576,14 +588,13 @@ export var zutil = {
     for (var p in super_class) {
       sub_class[p] = super_class[p];
     }
-    if (typeof (sub_class) != 'function' || typeof (super_class) != 'function') {
-      return sub_class;
+    if (typeof (sub_class) == 'function' && typeof (super_class) == 'function') {
+      function __() {
+        this.constructor = sub_class;
+      }
+      sub_class.prototype = super_class === null ? Object.create(super_class) : (__.prototype = super_class.prototype, new __());
     }
 
-    function __() {
-      this.constructor = sub_class;
-    }
-    sub_class.prototype = super_class === null ? Object.create(super_class) : (__.prototype = super_class.prototype, new __());
     if (name_sapce) {
       var arr_space = name_sapce.split('.');
       self.nameMap(arr_space, null, sub_class);
@@ -754,6 +765,3 @@ export var zutil = {
 zutil.log = zutil.createLog();
 zutil.logErr = zutil.createLog('error');
 zutil.logAll = zutil.createLogAll();
-zutil.about = function () {
-  zutil.log(decodeURI(TIP_TXT.about));
-};

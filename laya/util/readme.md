@@ -20,3 +20,18 @@ var help_glr = new zsySlider(help_glr, {
 help_glr.prev(); // 向前划
 help_glr.next(); // 向后划
 ```
+
+## zutil
+
+* getChildenByName 获取匹配名称的子集
+* getElementsByName 获取匹配名称的子孙集合
+* getChildenByType 获取匹配类型的子集
+* getElementsByType 获取匹配类型的子孙集合
+* getElementsByProperty 获取匹配属性的子孙集合
+* getElementsByProperty 获取匹配属性的子孙集合
+* ...
+
+
+## animate
+* 常见的动画函数
+* fade_in | fade_out ...
