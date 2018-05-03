@@ -328,7 +328,7 @@
     self.detectNextShowIndex(move_direction);
     self.animateMove();
   };
-  // 滑动结束 滚动最终的位置动画
+  // 滑动结束 滚动最终的位置动画//
   _proto.animateMove = function() {
     var self = this;
     var end_call_back = self.config.end_call_back;
