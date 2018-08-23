@@ -182,7 +182,7 @@
   // con 的 mouseDown
   _proto.onTouchStart = function(event) {
     var self = this;
-    var dom_list = event.target;
+    var dom_list = self.dom.list;
     if (self.getTouchStatus() == "onEndAnimate") {
       // 正在touchEnd动画时候不做处理
       return true;
@@ -200,7 +200,7 @@
   // con 的 mouseMove
   _proto.onTouchMove = function(event) {
     var self = this;
-    var dom_list = event.target;
+    var dom_list = self.dom.list;
     if (self.getTouchStatus() !== "start" && self.getTouchStatus() !== "move") {
       return true;
     }
