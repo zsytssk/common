@@ -6,20 +6,20 @@
         move_scope_rate: 1 / 6,
         pagination: true, // false | true || dom
         loop: true, // false | true || dom
-        end_call_back: null // 移动完成执行函数 @para index
+        end_call_back: null, // 移动完成执行函数 @para index
     };
 
     function zsySlider(dom, options) {
         var self = this;
         self.dom = {
-            glr: dom
+            glr: dom,
         };
         self.config = {}; // 储存游戏的配置
         self.tmp = {}; // 储存游戏中数据
         self.initConfig(options);
         self.init();
     }
-    Laya.class(zsySlider, "zsySlider");
+    Laya.class(zsySlider, 'zsySlider');
     var _proto = zsySlider.prototype;
 
     // 初始化配置
@@ -29,22 +29,27 @@
             options = {};
         }
 
-        self.config.cur_index = options.origin_index || default_config.origin_index;
-        self.config.item_space = options.item_space || default_config.item_space;
+        self.config.cur_index =
+            options.origin_index || default_config.origin_index;
+        self.config.item_space =
+            options.item_space || default_config.item_space;
         self.config.animate_time =
             options.animate_time || default_config.animate_time;
-        self.config.pagination = options.pagination || default_config.pagination;
+        self.config.pagination = options.hasOwnProperty('pagination')
+            ? options.pagination
+            : default_config.pagination;
         if (options.hasOwnProperty('loop')) {
             self.config.loop = options.loop;
         } else {
-            self.config.loop =  default_config.loop;
+            self.config.loop = default_config.loop;
         }
         self.config.end_call_back =
             options.end_call_back || default_config.end_call_back;
 
         // 每次移动的距离
         if (options.item_width) {
-            self.config.move_space = options.item_width + self.config.item_space;
+            self.config.move_space =
+                options.item_width + self.config.item_space;
             // 每次移动超过这个阈值 才会移动到上一个或者下一个, 不然只是移动到原来的位置
             self.config.move_scope =
                 self.config.move_space * default_config.move_scope_rate;
@@ -58,7 +63,8 @@
 
         // 如果option中没有设置item_width, 就根据当前的宽度计算 应该移动的位移
         if (!self.config.move_space) {
-            self.config.move_space = self.dom.con.width + self.config.item_space;
+            self.config.move_space =
+                self.dom.con.width + self.config.item_space;
             self.config.move_scope =
                 self.config.move_space * default_config.move_scope_rate;
         }
@@ -68,8 +74,8 @@
         var self = this;
         var dom_glr = self.dom.glr;
 
-        self.dom.con = dom_glr.getChildByName("con");
-        self.dom.list = self.dom.con.getChildByName("list");
+        self.dom.con = dom_glr.getChildByName('con');
+        self.dom.list = self.dom.con.getChildByName('list');
         self.replaceGlrList();
         self.addMask();
 
@@ -79,8 +85,8 @@
         }
         var pagination = self.config.pagination;
         if (pagination) {
-            if (typeof pagination == "boolean") {
-                self.dom.pagination = dom_glr.getChildByName("pagination");
+            if (typeof pagination == 'boolean') {
+                self.dom.pagination = dom_glr.getChildByName('pagination');
             } else {
                 self.dom.pagination = pagination;
             }
@@ -107,7 +113,7 @@
         var dom_list = self.dom.list;
         var dom_new_list = new Laya.Box();
 
-        dom_new_list.name = "list";
+        dom_new_list.name = 'list';
         var arr_items = [];
         /*
           将list添加在数组中, 然后在添加到新的list中
@@ -115,7 +121,7 @@
         */
         for (var i = 0; i < dom_list.numChildren; i++) {
             var dom_item = dom_list.getChildAt(i);
-            dom_item.name = "item";
+            dom_item.name = 'item';
             dom_item.visible = true;
             arr_items.push(dom_item);
         }
@@ -131,7 +137,7 @@
         self.dom.list = dom_new_list;
         dom_con.addChild(dom_new_list);
         dom_new_list.space = default_config.item_space;
-        dom_new_list.cacheAs = "none";
+        dom_new_list.cacheAs = 'none';
         dom_new_list.x = dom_list.x;
         dom_new_list.y = dom_list.y;
 
@@ -168,7 +174,7 @@
         var self = this;
         var dom_pagination = self.dom.pagination;
 
-        if (self.getTouchStatus() == "onEndAnimate") {
+        if (self.getTouchStatus() == 'onEndAnimate') {
             // 正在touchEnd动画时候不做处理
             return true;
         }
@@ -177,9 +183,9 @@
         var move_direction, next_show_index;
         next_show_index = index;
         if (cur_index > index) {
-            move_direction = "left";
+            move_direction = 'left';
         } else {
-            move_direction = "right";
+            move_direction = 'right';
         }
         self.handleMoveEffect(move_direction, next_show_index);
         self.animateMove(ani);
@@ -189,34 +195,37 @@
     _proto.onTouchStart = function(event) {
         var self = this;
         var dom_list = event.target;
-        if (self.getTouchStatus() == "onEndAnimate") {
+        if (self.getTouchStatus() == 'onEndAnimate') {
             // 正在touchEnd动画时候不做处理
             return true;
         }
         self.tmp.start_point = {
             x: event.stageX,
-            y: event.stageY
+            y: event.stageY,
         };
         self.tmp.origin_pos = {
-            x: dom_list.x
+            x: dom_list.x,
         };
-        self.setTouchStatus("start");
+        self.setTouchStatus('start');
     };
 
     // con 的 mouseMove
     _proto.onTouchMove = function(event) {
         var self = this;
         var dom_list = self.dom.list;
-        if (self.getTouchStatus() !== "start" && self.getTouchStatus() !== "move") {
+        if (
+            self.getTouchStatus() !== 'start' &&
+            self.getTouchStatus() !== 'move'
+        ) {
             return true;
         }
 
-        if (self.getTouchStatus() == "start") {
-            self.setTouchStatus("move");
+        if (self.getTouchStatus() == 'start') {
+            self.setTouchStatus('move');
         }
         self.tmp.move_dist = {
             x: event.stageX - self.tmp.start_point.x,
-            y: event.stageY - self.tmp.start_point.y
+            y: event.stageY - self.tmp.start_point.y,
         };
         dom_list.x = self.tmp.origin_pos.x + self.tmp.move_dist.x;
         self.detectMoveDirection(self.tmp.move_dist.x);
@@ -228,9 +237,9 @@
         var cur_index = self.config.cur_index;
         var move_direction;
         if (move_x > 0) {
-            move_direction = "left";
+            move_direction = 'left';
         } else if (move_x < 0) {
-            move_direction = "right";
+            move_direction = 'right';
         } else {
             // 没有移动不做处理
             self.tmp.next_show_index = self.config.cur_index;
@@ -241,7 +250,7 @@
             if (cur_index == 0 && move_direction == 'left') {
                 return;
             }
-            if (cur_index == len-1 && move_direction == 'right') {
+            if (cur_index == len - 1 && move_direction == 'right') {
                 return;
             }
         }
@@ -258,7 +267,7 @@
         var items_num = dom_items.length;
         var move_direction, next_show_index;
 
-        if (move_direction == "left") {
+        if (move_direction == 'left') {
             next_show_index = cur_index - 1;
         } else {
             next_show_index = cur_index + 1;
@@ -300,7 +309,7 @@
 
         var dom_next_show = dom_items[next_show_index];
         dom_next_show.visible = true;
-        if (move_direction == "left") {
+        if (move_direction == 'left') {
             dom_next_show.x = -move_space;
         } else {
             dom_next_show.x = move_space;
@@ -311,11 +320,9 @@
     _proto.onTouchEnd = function(event) {
         var self = this;
         var move_dist = self.tmp && self.tmp.move_dist && self.tmp.move_dist.x;
-        if (self.getTouchStatus() !== "move") {
-            return true;
-        }
-        if (!move_dist) {
-            // 没有移动距离无需做任何操作
+
+        if (self.getTouchStatus() !== 'move' || !move_dist) {
+            self.setTouchStatus('end');
             return true;
         }
 
@@ -333,20 +340,20 @@
     _proto.next = function() {
         var self = this;
         var status = self.getTouchStatus();
-        if (status != "end") {
+        if (status != 'end') {
             return;
         }
-        var move_direction = "right";
+        var move_direction = 'right';
         self.detectNextShowIndex(move_direction);
         self.animateMove();
     };
     _proto.prev = function() {
         var self = this;
         var status = self.getTouchStatus();
-        if (status != "end") {
+        if (status != 'end') {
             return;
         }
-        var move_direction = "left";
+        var move_direction = 'left';
         self.detectNextShowIndex(move_direction);
         self.animateMove();
     };
@@ -357,24 +364,24 @@
         var next_show_index = self.tmp.next_show_index;
         var move_space = self.config.move_space;
 
-        self.setTouchStatus("onEndAnimate");
+        self.setTouchStatus('onEndAnimate');
 
         if (self.config.cur_index == next_show_index) {
             // 如果两者相等 移动的距离为0
             move_space = 0;
         } else {
             self.config.cur_index = next_show_index;
-            if (self.tmp.move_direction == "right") {
+            if (self.tmp.move_direction == 'right') {
                 move_space = -move_space;
             }
         }
 
         var dom_list = self.dom.list;
         var changeProper = {
-            x: move_space
+            x: move_space,
         };
 
-        if (ani===false) {
+        if (ani === false) {
             dom_list.x = move_space;
             callLater.call(self);
         } else {
@@ -388,13 +395,11 @@
             );
         }
 
-        
-
         function callLater() {
             if (self.config.pagination) {
                 self.dom.pagination.selectedIndex = self.config.cur_index; // pagination的处理
             }
-            if (end_call_back && typeof end_call_back == "function") {
+            if (end_call_back && typeof end_call_back == 'function') {
                 end_call_back(self.config.cur_index);
             }
             self.reset();
@@ -406,7 +411,7 @@
         self.resetGlrCon();
         self.tmp = {};
 
-        self.setTouchStatus("end");
+        self.setTouchStatus('end');
     };
 
     // 滚动结束之后, reset所有的item
@@ -438,6 +443,6 @@
     // 获取 滚动的状态
     _proto.getTouchStatus = function() {
         var self = this;
-        return self.dom.con._zsySlider_touchtatus || "end";
+        return self.dom.con._zsySlider_touchtatus || 'end';
     };
 })();
