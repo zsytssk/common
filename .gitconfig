@@ -1,0 +1,109 @@
+[push]
+  default = simple
+[user]
+	name = zsytssk
+	email = zsytssk@gmail.com
+[diff]
+  tool = BCompare
+  renameLimit = 9150
+[merge]
+  tool = BCompare
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[difftool "code"]
+  cmd = \"D:/Program Files (x86)/Microsoft VS Code/Code.exe\" --wait --diff $LOCAL $REMOTE
+[difftool "BCompare"]
+  cmd = \"E:/zsytssk/tools/Beyond Compare 3/BCompare.exe\" $BASE $LOCAL $REMOTE
+[mergetool "code"]
+  cmd = \"D:/Program Files (x86)/Microsoft VS Code/Code.exe\" \"$BASE\" \"$LOCAL\" \"$REMOTE\" -o \"$MERGED\"
+  trustExitCode = true
+[mergetool "sourcetree"]
+	cmd = /Users/zsy/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[mergetool "BCompare"]
+  cmd = \"D:/zsytssk/other/software/Beyond Compare 3/BComp.exe\" \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+  trustExitCode = true
+[commit]
+	template = D:/Users/zhangshiyang/.gitmessage.txt
+[alias]
+  co = checkout
+  cob = "!f() { git checkout -b \"$1\" \"$2\"; }; f"
+  cobr = "!f() { git checkout -b \"$1\" origin/\"$1\"; }; f"
+  ac = "!f(){ git add .; git commit -m \"$(git bcn):$1\" ;};f"
+  acpp = "!f(){ git add .; git commit -m \"$(git bcn):$1\" ; git pull origin $(git bcn); git push -u origin $(git bcn);};f"
+  acppo = "!f(){ git add .; git commit -m \"$(git bcn):$1\" ; git pull gitee $(git bcn); git push -u gitee $(git bcn);};f"
+  cpp = "!f(){ git commit -m \"$(git bcn):$1\" ; git pull origin $(git bcn); git push -u origin $(git bcn);};f"
+  cam = "!f(){git commit --amend -m "$1" ;};f"
+  pla = "!f(){ git pull origin $(git bcn); };f"
+  pua = "!f(){ git push origin $(git bcn) ; };f"
+  puaLL = "!f(){ git pull --unshalloW ; };f"
+  ba = branch
+  bd = branch -d
+  bda = "!f() { git branch -d "$1"; git push --delete origin "$1";};f"
+  bdec = "!f() { git branch | grep -v '*' | xargs -n 1 git branch -D ;} ;f"
+  bdew = "!f() { git branch | grep -v $1 | xargs -n 1 git branch -D ;} ;f"
+  bdewt = "!f() { git branch | grep  $1 | grep -v '*' | xargs -n 1 git branch -D ;} ;f"
+  # branch current name
+  bcn = "!git rev-parse --abbrev-ref HEAD"
+  bra = "!f() { git branch -a ;};f"
+  cleanall = "!f() { git fetch origin $(git bcn); git reset --hard origin/$(git bcn); git clean -df ; };f"
+  f1 = "!f() { git fetch --depth=1; };f"
+  ft = "!f() { git fetch --depth=$1; };f"
+  bras = "!f() { git branch -a | grep $1; }; f"
+  bra1 = "!f() { git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'; }; f"
+  bra1s = "!f() { git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--' | grep $1; }; f"
+  dc = diff --cached
+  l1 = log --oneline --decorate --all
+  l2 = log --pretty=format:"%C(yellow)%h\\ [%cn]\\ %ad%Cred%d\\ %Creset%s%Cblue" --decorate
+  lc = log --decorate --numstat --all -1
+  lf = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+  lfc = log --pretty=format:"%C(yellow)%h\\ %Cblue[%cn]%ad\\ %Creset%s\\" --decorate --date=format:'[%Y/%m/%d %H:%M:%S]' --numstat -1
+  gf = "!f() { git ls-files | grep -i $1 ;};f"
+  la = !git config --list | grep ^alias\\. | cut -c 7- | grep -Ei --color \"$1\" "#" # List aliases
+  mc = diff --name-only --diff-filter=U
+  mct = "!f() { git checkout --theirs -- $1 ;};f"
+  mco = "!f() { git checkout --ours -- $1 ;};f"
+  mcoall = "!f() { git checkout --ours -- . ;};f"
+  mct = "!f() { git checkout --theirs -- . ;};f"
+  ls-subtrees = !"git log | grep git-subtree-dir | awk '{ print $2 }'"
+  df = "!f() { \
+            para1="$1"; \
+            para2="$2"; \
+            if [ ${#para1} -lt 5 ] && [ ${#para1} -ne 0 ]; then \
+                para1=HEAD~${para1}; \
+            fi;\
+            if [ ${#para2} -lt 5 ] && [ ${#para2} -ne 0 ]; then \
+                para2=HEAD~${para2}; \
+            fi;\
+            if [ ! ${para2} ]; then \
+                echo git compare HEAD ${para1}; \
+                git diff --name-only HEAD ${para1}; \
+            else \
+                echo git compare ${para1} ${para2}; \
+                git diff --name-only ${para1} ${para2}  \
+            fi;\
+        }; f"
+  dftd = difftool -d --symlinks
+  sf = status --short
+
+[core]
+  packedGitLimit = 512m
+  packedGitWindowSize = 512m
+  quotepath = false
+	autocrlf = false
+	longpaths = true
+	ignorecase = false
+	excludesfile = /Users/zsy/.gitignore_global
+[pack]
+  deltaCacheSize = 2047m
+  packSizeLimit = 2047m
+  windowMemory = 2047m
+[gui]
+  encoding = utf-8
+[i18n]
+  logoutputencoding = utf-8
+[i18n "commit"]
+  encoding = utf-8
+[fetch]
+	prune = true
